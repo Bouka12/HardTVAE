@@ -79,24 +79,10 @@ The `analysis/` directory contains Python scripts for analyzing and visualizing 
 - `distributional_analysis.py`: Analyzes KS statistics and creates visualizations
 - `hardness_analysis.py`: Analyzes hardness fidelity across metrics and strategies
 - `topological_analysis.py`: Analyzes topological fidelity results
+- `complexity_analysis.py`: Analyzes complexity-based fidelity results
 - `utility_analysis.py`: Analyzes classification performance gains
 
-## Key Findings
-
-### Distributional Fidelity
-- Hardness-aware weighting strategies improve distribution matching
-- Curriculum learning shows consistent improvements across datasets
-- Self-paced learning provides adaptive benefits
-
-### Classification Utility
-- Synthetic data generated with hardness weighting improves classifier performance
-- Multiple classifiers benefit from hardness-aware generation
-- Balanced accuracy improvements are significant for imbalanced datasets
-
-### Hardness Metric Effectiveness
-- Different hardness metrics capture different aspects of instance difficulty
-- Relative entropy and PyHard metrics show complementary strengths
-- Metric selection should consider specific application requirements
+s
 
 ## Experimental Setup
 
@@ -108,7 +94,7 @@ Medical datasets with varying characteristics:
 
 ### Hardness Metrics
 - **PyHard Metrics** (18+): kDN, DS, DCP, TD_P, TD_U, CL, CLD, MV, CB, N1, N2, LSC, LSR, Harmfulness, F1, F2, F3, F4
-- **Custom Metrics**: relative_entropy, pca_contribution
+
 
 ### Weighting Strategies
 1. **Static**: Constant weights based on hardness scores
@@ -144,16 +130,7 @@ To reproduce these results:
    python results/analysis/utility_analysis.py
    ```
 
-## Statistical Analysis
 
-### Significance Testing
-- Wilcoxon signed-rank test for paired comparisons
-- Friedman test for multiple comparisons
-- P-values reported at α = 0.05 significance level
-
-### Effect Sizes
-- Reported alongside p-values for practical significance
-- Effect size interpretation guidelines provided in analysis scripts
 
 ## Data Availability
 
@@ -164,38 +141,22 @@ All experimental data is provided in CSV format for:
 
 ## Citation
 
-If you use these experimental results in your research, please cite:
+If you use these experimental results in your research, please cite (to be updated):
 
 ```bibtex
 @article{hardvae2024,
-  title={HardVAE: Hardness-Aware Synthetic Data Generation for Imbalanced Classification},
-  author={Your Name and Co-authors},
-  journal={Your Journal},
-  year={2024},
+  title={HardVAE: Hardness-Aware Synthetic Data Generation for Imbalanced Classification },
+  author={},
+  journal={},
+  year={},
   volume={XX},
   pages={XX--XX},
   doi={XX.XXXX/XXXXX}
 }
 ```
 
-## Supplementary Materials
-
-Additional materials available in this directory:
-- Detailed statistical analysis tables
-- Per-dataset performance breakdowns
-- Hyperparameter sensitivity analysis
-- Computational cost analysis
-
-## Questions and Issues
-
-For questions about the experimental results:
-- Check RESULTS_SUMMARY.md for key findings
-- Review analysis scripts in the analysis/ directory
-- Open an issue on GitHub for technical questions
-- Contact the authors for methodological questions
 
 ---
 
-**Experiment Date**: 2024  
 **Data Version**: 1.0  
-**Last Updated**: December 2024
+**Last Updated**: December 2025

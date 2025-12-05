@@ -133,8 +133,8 @@ HardVAE/
 - `CVAEHardnessIntegrator`: Utilities for integrating hardness into CVAE training
 
 **Key Features**:
-- 18+ PyHard metrics (linear, neighborhood-based, network-based, feature-based)
-- Custom metrics: relative entropy (ensemble disagreement), PCA-based contributions
+- 18 PyHard metrics (linear, neighborhood-based, network-based, feature-based)
+- Custom metrics: relative entropy (ensemble disagreement), PCA-based contributions (OPTIONAL)
 - Flexible metric grouping for targeted analysis
 - Support for multiple weighting strategies
 
@@ -153,12 +153,13 @@ HardVAE/
 3. **Instance-Level Fidelity**: Hardness pattern similarity (nearest neighbor analysis)
 4. **Complexity Fidelity**: Data complexity metric preservation (problexity)
 5. **Utility Evaluation**: Downstream task performance (train-on-synth → test-on-real)
-6. **Clustering Fidelity**: Cluster structure preservation
+6. **Clustering Fidelity**: Cluster structure preservation (UNUSED)
 
 **Analysis Scripts**:
 - `distributional_analysis.py`: Processes and visualizes distributional fidelity metrics
 - `hardness_analysis.py`: Analyzes hardness fidelity across metrics and strategies
 - `topological_analysis.py`: Visualizes topological fidelity results
+- `complexity_analysis.py`: Visualization and Analysis of the complexity-based fidelity
 
 ### Integration Module (`hardvae/integration/`)
 
@@ -240,8 +241,7 @@ Measures the difficulty of classifying individual instances. Higher hardness ind
 - **kDN (k-Disagreement Neighbors)**: Disagreement among k-nearest neighbors
 - **DS (Disjunct Size)**: Minimum number of samples needed to cover an instance
 - **DCP (Density-Certainty Percentage)**: Density and certainty of instance neighborhood
-- **Relative Entropy**: Ensemble classifier disagreement
-- **PCA Contribution**: Instance contribution to principal components
+
 
 ### Fidelity Views
 Six complementary perspectives on synthetic data quality:
@@ -280,7 +280,7 @@ results = evaluator.evaluate_all(X_real, y_real, X_synth, y_synth)
 ```python
 from hardvae.core import HardnessCalculator
 calc = HardnessCalculator()
-scores = calc.calculate_hardness_scores(X, y, metrics=['feature_kDN', 'relative_entropy'])
+scores = calc.calculate_hardness_scores(X, y, metrics=['feature_kDN'])
 ```
 
 ### CVAE Training
@@ -303,5 +303,5 @@ See `requirements.txt` for detailed version specifications.
 
 ---
 
-**Last Updated**: December 2024  
+**Last Updated**: December 2025
 **Version**: 1.0.0

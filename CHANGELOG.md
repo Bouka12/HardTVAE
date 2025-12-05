@@ -42,19 +42,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Contributing guidelines
 - Example scripts and tutorials
 
-## Future Releases
-
-### [1.1.0] -
-- [ ] Additional hardness metrics
-- [ ] Enhanced visualization options
-- [ ] Performance optimizations
-- [ ] Additional utility evaluation metrics
-
-### [1.2.0] - 
-- [ ] Web-based dashboard for results visualization
-- [ ] Automated hyperparameter tuning
-- [ ] Extended documentation with more tutorials
-- [ ] Community contributions integration
 
 ---
 

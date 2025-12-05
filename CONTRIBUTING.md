@@ -204,7 +204,7 @@ Closes #123
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/HardVAE.git
+   git clone https://github.com/Bouka12/HardVAE.git
    cd HardVAE
    ```
 

@@ -697,7 +697,7 @@ This reproducibility guide ensures that:
 For questions about reproducibility:
 
 1. Check this guide first
-2. Review the code comments in `cvae_hardness_integration_imblearn_2.py`
+2. Review the code comments in `cvae_hardness_integration_imblearn_2.py` and related scripts in `/original_code`
 3. Check the GitHub repository for the latest code
 4. Contact the authors for clarification
 
