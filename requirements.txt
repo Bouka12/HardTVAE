@@ -1,35 +1,30 @@
 # Core Dependencies
-numpy>=1.19.0,<2.0.0
-pandas>=1.1.0,<2.0.0
-torch>=1.9.0
-scikit-learn>=0.24.0,<2.0.0
-scipy>=1.5.0,<2.0.0
-matplotlib>=3.3.0,<4.0.0
-seaborn>=0.11.0,<1.0.0
+numpy>=1.23.5,<2.0.0
+pandas>=1.5.3,<2.0.0
+torch>=2.6.0
+scikit-learn>=1.5.2,<2.0.0
+scipy>=1.13.0,<2.0.0
+matplotlib>=3.9.4,<4.0.0
+seaborn>=0.13.2,<1.0.0
 
 # Meta-feature and Complexity Analysis
-pymfe>=0.4.0
-problexity>=0.5.11 
+pymfe>=0.4.3
+problexity>=0.5.9
 
 # Hardness Metrics (Recommended)
-pyhard>=0.2.0
+pyhard>=2.2.4
 
 # Imbalanced Learning
-imblearn>=0.8.0
+imblearn>=0.0
 
 # Visualization
-plotly>=5.0.0
+plotly>=5.24.1
 
 # Optional: Topological Data Analysis
-ripser>=0.0.16
-persim>=0.2.0
+ripser>=0.6.12
+persim>=0.3.8
 
 # Optional: Advanced Metrics
-sdmetrics>=0.13.0
+sdmetrics>=0.18.0
 
-# Development and Testing (optional)
-pytest>=6.0.0
-pytest-cov>=2.12.0
-black>=21.0
-flake8>=3.9.0
-mypy>=0.900
+
