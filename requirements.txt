@@ -9,7 +9,7 @@ seaborn>=0.11.0,<1.0.0
 
 # Meta-feature and Complexity Analysis
 pymfe>=0.4.0
-problexity>=1.0.0 
+problexity>=0.5.11 
 
 # Hardness Metrics (Recommended)
 pyhard>=0.2.0
