@@ -28,7 +28,6 @@ Class imbalance is a fundamental challenge in machine learning, where minority c
 - **Instance Hardness Analysis**: Nearest neighbor distance analysis and PyHard metrics
 - **Complexity Analysis**: Data complexity patterns using problexity package
 - **Utility Assessment**: Train-on-synthetic → test-on-real evaluation with multiple classifiers
-- **Clustering Analysis**: Cluster structure similarity and quality metrics (Optional)
 
 ### 🔧 Hardness Calculation
 - **18+ PyHard Metrics**: Linear, neighborhood-based, network-based, and feature-based hardness measures
@@ -43,10 +42,6 @@ Class imbalance is a fundamental challenge in machine learning, where minority c
 - **Imbalanced Dataset Support**: Native handling of class imbalance
 
 ### 📈 Comprehensive Visualization & Reporting
-- **Interactive Dashboards**: Plotly-based interactive visualizations
-- **Radar Charts**: Multi-dimensional quality assessment
-- **Comparison Matrices**: Method comparison across multiple metrics
-- **HTML/Markdown Reports**: Publication-ready evaluation summaries
 - **CSV Exports**: Detailed metrics for further analysis
 
 ## 📋 Requirements
@@ -178,11 +173,6 @@ X_synthetic = trainer.generate(n_samples=500, condition=1)
 
 ## 📊 Evaluation Results Interpretation
 
-### Quality Score Ranges
-- **0.8-1.0**: Excellent synthetic data quality
-- **0.7-0.8**: Good synthetic data quality
-- **0.6-0.7**: Moderate synthetic data quality
-- **0.0-0.6**: Poor synthetic data quality
 
 ### Component Scores
 Each evaluation component returns a similarity score [0, 1]:
@@ -191,7 +181,6 @@ Each evaluation component returns a similarity score [0, 1]:
 - **Hardness**: Instance difficulty pattern similarity
 - **Complexity**: Data complexity metric preservation
 - **Utility**: Downstream task performance
-- **Clustering**: Cluster structure similarity (Optional)
 
 ## 📁 Project Structure
 
@@ -250,13 +239,11 @@ HardVAE implements multiple hardness metrics organized into categories:
 - **Feature-Based**: LSC, LSR
 - **Other**: Harmfulness, F1, F2, F3, F4
 
-#### Custom Metrics
-- **Relative Entropy**: Ensemble classifier disagreement (measures instance ambiguity)
-- **PCA Contribution**: Instance contribution to principal components
+
 
 ### Evaluation Framework
 
-The evaluation framework assesses synthetic data quality across six complementary dimensions:
+The evaluation framework assesses synthetic data quality across five complementary dimensions:
 
 | View | Goal | Method | Reference |
 |------|------|--------|-----------|
@@ -265,14 +252,13 @@ The evaluation framework assesses synthetic data quality across six complementar
 | **Instance-Level Fidelity** | Preserve instance difficulty | Instance hardness metrics | Smith et al. (2014) |
 | **Complexity Fidelity** | Preserve classification complexity | Meta-feature complexity measures | Lorena et al. (2019) |
 | **Utility Evaluation** | Support downstream modeling | Train-on-synth → test-on-real | Jordon et al. (2022) |
-| **Clustering Fidelity** | Preserve cluster structure | Cluster quality metrics | Calinski & Harabasz (1974) |
 
 ## 🎓 Citation
 
 If you use HardVAE in your research, please cite:
 
 ```bibtex
-@article{hardvae2024,
+@article{hardvae,
   title={HardVAE: Hardness-Aware Synthetic Data Generation for Imbalanced Classification},
   author={X,Y,Z},
   journal={Journal-X},
@@ -285,24 +271,8 @@ If you use HardVAE in your research, please cite:
 
 ## 📚 Documentation
 
-- **[API Reference](docs/api_reference.md)**: Complete API documentation
-- **[Tutorials](docs/tutorials.md)**: Step-by-step usage guides
-- **[Methodology](docs/methodology.md)**: Detailed explanation of methods
 - **[Examples](examples/)**: Complete working examples
 
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -315,7 +285,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions, issues, or suggestions:
 - Open an issue on [GitHub Issues](https://github.com/Bouka12/HardVAE/issues)
-- Contact: z12salsm(dot)(uco)(dot)(es)
+- Contact: anonymous
 
 ## 📖 References
 
