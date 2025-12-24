@@ -12,13 +12,12 @@ Class imbalance is a fundamental challenge in machine learning, where minority c
 
 1. **Quantifying instance hardness** using multiple metrics (PyHard + custom metrics)
 2. **Integrating hardness into CVAE training** through weighted loss functions
-3. **Comprehensively evaluating** synthetic data quality across 6 dimensions:
+3. **Comprehensively evaluating** synthetic data quality across 5 dimensions:
    - Statistical fidelity (distribution matching)
    - Topological fidelity (shape preservation)
    - Instance-level fidelity (hardness preservation)
    - Complexity fidelity (data complexity metrics)
    - Utility evaluation (downstream task performance)
-   - Clustering structure preservation
 
 ## 🚀 Key Features
 
@@ -31,7 +30,6 @@ Class imbalance is a fundamental challenge in machine learning, where minority c
 
 ### 🔧 Hardness Calculation
 - **18+ PyHard Metrics**: Linear, neighborhood-based, network-based, and feature-based hardness measures
-- **Custom Metrics**: Relative entropy (ensemble disagreement) and PCA-based contributions
 - **Flexible Architecture**: Easy integration with custom hardness metrics
 - **Metric Grouping**: Organized by category for targeted analysis
 
