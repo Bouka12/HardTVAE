@@ -214,9 +214,7 @@ HardVAE/
 │   ├── test_evaluation.py
 │   └── test_cvae.py
 ├── docs/                             # Documentation
-│   ├── api_reference.md
-│   ├── tutorials.md
-│   └── methodology.md
+│   └── data/                         # Results
 ├── requirements.txt                  # Core dependencies
 ├── requirements-full.txt             # All dependencies
 ├── setup.py                          # Package setup
@@ -224,32 +222,7 @@ HardVAE/
 └── README.md
 ```
 
-## 🔬 Methodology
 
-### Instance Hardness Metrics
-
-HardVAE implements multiple hardness metrics organized into categories:
-
-#### PyHard Metrics (18 metrics)
-- **Linear Separability**: kDN, DS, DCP, TD_P, TD_U
-- **Neighborhood-Based**: CL, CLD, MV, CB
-- **Network-Based**: N1, N2
-- **Feature-Based**: LSC, LSR
-- **Other**: Harmfulness, F1, F2, F3, F4
-
-
-
-### Evaluation Framework
-
-The evaluation framework assesses synthetic data quality across five complementary dimensions:
-
-| View | Goal | Method | Reference |
-|------|------|--------|-----------|
-| **Statistical Fidelity** | Match feature-wise distributions | Statistical meta-features, KS test | Lorena et al. (2019) |
-| **Topological Fidelity** | Preserve shape & structure | Persistent homology | Chazal & Michel (2016) |
-| **Instance-Level Fidelity** | Preserve instance difficulty | Instance hardness metrics | Smith et al. (2014) |
-| **Complexity Fidelity** | Preserve classification complexity | Meta-feature complexity measures | Lorena et al. (2019) |
-| **Utility Evaluation** | Support downstream modeling | Train-on-synth → test-on-real | Jordon et al. (2022) |
 
 ## 🎓 Citation
 
