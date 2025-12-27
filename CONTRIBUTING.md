@@ -243,11 +243,4 @@ Maintainers follow this process for releases:
 - Look at examples in `examples/`
 - Open a discussion for questions
 
-## Recognition
 
-Contributors will be recognized in:
-- CONTRIBUTORS.md file
-- GitHub contributors page
-- Release notes for significant contributions
-
-Thank you for contributing to HardVAE!

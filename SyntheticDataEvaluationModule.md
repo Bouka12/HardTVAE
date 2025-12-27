@@ -116,7 +116,7 @@ print(f"Assessment: {results['summary']['assessment']}")
 - **Nearest Neighbor Analysis**: Distance-based hardness estimation
 - **Distribution Comparison**: Statistical tests on hardness patterns
 
-### 6. Topological Analysis (Optional)
+### 6. Topological Analysis ()
 - **Persistent Homology**: Shape and structure analysis
 - **Persistence Diagrams**: Topological feature comparison
 
@@ -181,11 +181,6 @@ The evaluation generates several output files:
 
 ## Interpretation Guide
 
-### Quality Scores
-- **0.8-1.0**: Excellent synthetic data quality
-- **0.7-0.8**: Good synthetic data quality
-- **0.6-0.7**: Moderate synthetic data quality
-- **0.0-0.6**: Poor synthetic data quality
 
 ### Component Interpretation
 - **Statistical**: How well distributions match
@@ -225,35 +220,10 @@ for dataset in datasets:
 - **Memory Management**: Efficient handling of high-dimensional data
 - **Computation Time**: Parallel processing where possible
 
-## Troubleshooting
 
-### Common Issues
-
-1. **Single Class Error**: Ensure minority data contains multiple classes or samples
-2. **Memory Issues**: Reduce dataset size or increase sampling ratio
-3. **Missing Dependencies**: Install optional packages for full functionality
-
-### Error Handling
-The module includes comprehensive error handling with graceful degradation when components fail.
-
-## Contributing
-
-The module is designed to be extensible. To add new evaluation metrics:
-
-1. Implement the metric in the appropriate evaluation method
-2. Add visualization support in `evaluation_visualizer.py`
-3. Update the summary generation logic
 
 ## License
 
 This module is provided as-is for research and educational purposes.
 
-## Citation
-
-If you use this evaluation module in your research, please cite:
-```
-Synthetic Data Evaluation Module for Class Imbalance
-Enhanced comprehensive evaluation framework
-2025
-```
 

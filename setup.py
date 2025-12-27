@@ -11,7 +11,7 @@ setup(
     name="hardvae",
     version="1.0.0",
     author="Bouka",
-    author_email="z12salsm@uco.es",
+    author_email="",
     description="Hardness-Aware Synthetic Data Generation for Imbalanced Classification",
     long_description=long_description,
     long_description_content_type="text/markdown",
