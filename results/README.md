@@ -82,7 +82,6 @@ The `analysis/` directory contains Python scripts for analyzing and visualizing 
 - `complexity_analysis.py`: Analyzes complexity-based fidelity results
 - `utility_analysis.py`: Analyzes classification performance gains
 
-s
 
 ## Experimental Setup
 

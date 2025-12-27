@@ -301,8 +301,4 @@ For questions about the datasets:
 - Review the preprocessing notebooks for detailed transformation steps
 - Consult the main README.md for general project information
 
----
 
-**Last Updated**: December 2024 
-**Data Version**: 1.0  
-**Total Datasets**: 10 medical datasets with varying imbalance ratios
