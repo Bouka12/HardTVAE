@@ -2,18 +2,14 @@
 Enhanced Synthetic Minority Data Evaluation Module
 
 This module contains comprehensive evaluation classes for assessing the quality of synthetic minority data
-used for handling class imbalance. It implements 6 key evaluation aspects:
+used for handling class imbalance. It implements 4 key evaluation aspects:
 
 1. Statistical evaluation: correlation, distribution similarity, range coverage
 2. Topological Data Analysis (TDA): shape and structure analysis -> Modify to return a distance-based score!
-4. Instance hardness analysis: complexity similarity measurement -> Check the logic 
-5. Complexity-based analysis: data complexity metrics -> Check the logic
+3. Instance hardness analysis: complexity similarity measurement -> Check the logic 
+4. Complexity-based analysis: data complexity metrics -> Check the logic
 
-
-
-- In a separate class, in this script, we evaluate the utility of synthetic data :
-6. Model-based utility evaluation: landmarking and classification performance 
-
+Each evaluation aspect includes integrated plotting functionality to visualize results effectively.
 
 
 """
@@ -104,24 +100,20 @@ class SyntheticDataEvaluator:
         print("1. Running statistical evaluation...")
         stat_results = self.statistical_evaluation(X_real, y_real, X_synth, y_synth, save_path, dataset_name)
         self.results['statistical'] = stat_results['summary'] 
+
         
-        # # 2. Clustering-based Evaluation
-        # print("2. Running clustering-based evaluation...")
-        # cluster_results = self.clustering_evaluation(X_real, y_real, X_synth, y_synth, save_path, dataset_name)
-        # self.results['clustering'] = cluster_results['summary']
-        
-        # 3. Complexity Analysis
+        # 2. Complexity Analysis
         print("3. Running complexity analysis...")
         complexity_results = self.complexity_evaluation(X_real, y_real, X_synth, y_synth, 
                                                        save_path, dataset_name)
         self.results['complexity'] = complexity_results['summary']
              
-        # 4. Instance Hardness Analysis
+        # 3. Instance Hardness Analysis
         print("4. Running instance hardness analysis...")
         hardness_results = self.hardness_evaluation(X_real,y_real, X_synth, y_synth, save_path, dataset_name)
         self.results['hardness'] = hardness_results['summary']
         
-        # 5. Topological Data Analysis
+        # 4. Topological Data Analysis
         if TDA_AVAILABLE:
             print("5. Running topological data analysis...")
             tda_results = self.topological_evaluation(X_real, y_real, X_synth, y_synth, save_path, dataset_name)
@@ -301,155 +293,7 @@ class SyntheticDataEvaluator:
         }
         return final_results
 
-    # def clustering_evaluation(self, X_real, y_real, X_synth, y_synth, save_path=None, dataset_name="dataset", cluster_features = None):
-    #     """
-    #     Evaluate clustering-based metrics for data quality assessment.
-    #     Clustering features from `pymfe`:
-    #     - 'ch': Compute the Calinski and Harabasz index.(T. Calinski, J. Harabasz, A dendrite method for cluster analysis, Commun. Stat. Theory Methods 3 (1) (1974) 1–27.)
-    #     - 'int': Compute the INT index. (SOUZA, Bruno Feres de. Meta-aprendizagem aplicada à classificação de dados de expressão gênica. 2010. Tese (Doutorado em Ciências de Computação e Matemática Computacional), Instituto de Ciências Matemáticas e de Computação, Universidade de São Paulo, São Carlos, 2010. doi:10.11606/T.55.2010.tde-04012011-142551. [2] Bezdek, J. C.; Pal, N. R. (1998a). Some new indexes of cluster validity. IEEE Transactions on Systems, Man, and Cybernetics, Part B, v.28, n.3, p.301–315.)
-    #     - 'nre': Compute the normalized relative entropy. (Bruno Almeida Pimentel, André C.P.L.F. de Carvalho. A new data characterization for selecting clustering algorithms using meta-learning. Information Sciences, Volume 477, 2019, Pages 203-219)
-    #     - 'pb': Compute the pearson correlation between class matching and instance distances. (J. Lev, “The Point Biserial Coefficient of Correlation”, Ann. Math. Statist., Vol. 20, no.1, pp. 125-126, 1949.)
-    #     - 'sc': Compute the number of clusters with size smaller than a given size.(Bruno Almeida Pimentel, André C.P.L.F. de Carvalho. A new data characterization for selecting clustering algorithms using meta-learning. Information Sciences, Volume 477, 2019, Pages 203-219.)
-    #     - 'sil': Compute the mean silhouette value.(P.J. Rousseeuw, Silhouettes: a graphical aid to the interpretation and validation of cluster analysis, J. Comput. Appl. Math. 20 (1987) 53–65.)
-    #     - 'vdb': Compute the Davies and Bouldin Index. (D.L. Davies, D.W. Bouldin, A cluster separation measure, IEEE Trans. Pattern Anal. Mach. Intell. 1 (2) (1979) 224–227.)
-    #     - 'vdu': Compute the Dunn Index.(J.C. Dunn, Well-separated clusters and optimal fuzzy partitions, J. Cybern. 4 (1) (1974) 95–104.)
-    #     """
-    #     # Sample data if too large
-    #     # X_real_sampled, y_real_sampled = self._cluster_sampling(X_real, y_real)
-    #     # X_synth_sampled, y_synth_sampled = self._cluster_sampling(X_synth, y_synth)
-        
-    #     # Clustering meta-features
-    #     if cluster_features is None:
-    #         cluster_features = ['ch', 'int', 'nre', 'pb', 'sc', 'sil', 'vdb', 'vdu']
-        
-    #     try:
-    #         mfe = MFE(groups='clustering', features=cluster_features, random_state=self.random_state)
-            
-    #         # Extract clustering features for real data
-    #         mfe.fit(X_real, y_real)
-    #         ft_real = mfe.extract()
-            
-    #         # Extract clustering features for synthetic data
-    #         mfe.fit(X_synth, y_synth)
-    #         ft_synth = mfe.extract()
-            
-    #         # Calculate similarities
-    #         feature_names = ft_real[0]
-    #         real_values = np.array(ft_real[1])
-    #         synth_values = np.array(ft_synth[1])
-            
-    #         # Handle NaN values
-    #         valid_indices = ~(np.isnan(real_values) | np.isnan(synth_values))
-    #         real_values_clean = real_values[valid_indices]
-    #         synth_values_clean = synth_values[valid_indices]
-    #         feature_names_clean = [feature_names[i] for i in range(len(feature_names)) if valid_indices[i]]
-            
-    #         # Calculate similarity
-    #         differences = real_values_clean - synth_values_clean
-    #         relative_differences = np.abs(differences) / (np.abs(real_values_clean) + 1e-8)
-    #         similarity_scores = 1 / (1 + relative_differences)
-            
-    #     except Exception as e:
-    #         print(f"Warning: Clustering evaluation failed: {e}")
-    #         return {
-    #             'feature_names': [],
-    #             'real_values': [],
-    #             'synth_values': [],
-    #             'similarity_scores': [],
-    #             'mean_similarity': 0.0,
-    #             'error': str(e)
-    #         }
-    #         #     # Plotting block: synth_values_clean vs. feature_names_clean & similarity_scores that is will be 2 subplot based figure, with a figure for summary stats
-    #     if save_path:
-    #         try:
-    #             import matplotlib.pyplot as plt
-    #             import os
 
-    #             print(f"Saving clustering evaluation plots...")
-    #             os.makedirs(save_path, exist_ok=True)
-
-    #             fig, axes = plt.subplots(1, 2, figsize=(20, 6))
-
-    #             # Plot 1: Feature Values Comparison (Real vs Synthetic)
-    #             x = np.arange(len(feature_names_clean))
-    #             width = 0.35
-
-    #             axes[0].bar(x - width/2, real_values_clean, width, label='Real', alpha=0.7, color='blue')
-    #             axes[0].bar(x + width/2, synth_values_clean, width, label='Synthetic', alpha=0.7, color='orange')
-    #             axes[0].set_xlabel('Clustering Features')
-    #             axes[0].set_ylabel('Feature Values')
-    #             axes[0].set_title('Clustering Features Comparison')
-    #             axes[0].set_xticks(x)
-    #             axes[0].set_xticklabels(feature_names_clean, rotation=45, ha='right')
-    #             axes[0].legend()
-    #             axes[0].grid(True, alpha=0.3)
-
-    #             # Plot 2: Similarity Scores
-    #             colors = ['green' if s > 0.8 else 'orange' if s > 0.6 else 'red' for s in similarity_scores]
-    #             axes[1].bar(range(len(feature_names_clean)), similarity_scores, alpha=0.7, color=colors)
-    #             axes[1].set_xlabel('Clustering Features')
-    #             axes[1].set_ylabel('Similarity Score')
-    #             axes[1].set_title('Feature Similarity Scores')
-    #             axes[1].set_xticks(range(len(feature_names_clean)))
-    #             axes[1].set_xticklabels(feature_names_clean, rotation=45, ha='right')
-    #             axes[1].axhline(y=0.8, color='green', linestyle='--', alpha=0.5, label='Excellent')
-    #             axes[1].axhline(y=0.6, color='orange', linestyle='--', alpha=0.5, label='Good')
-    #             axes[1].legend()
-    #             axes[1].grid(True, alpha=0.3)
-
-    #             # # Plot 3: Summary Statistics
-    #             # summary_data = {
-    #             #     'Mean\nSimilarity': np.mean(similarity_scores),
-    #             #     'Valid\nFeatures': len(feature_names_clean)
-    #             # }
-
-    #             # colors = ['lightgreen', 'lightblue']
-    #             # bars = axes[2].bar(summary_data.keys(), summary_data.values(), alpha=0.7, color=colors)
-    #             # axes[2].set_ylabel('Value')
-    #             # axes[2].set_title('Clustering Evaluation Summary')
-    #             # axes[2].tick_params(axis='x', rotation=0)
-    #             # axes[2].grid(True, alpha=0.3)
-
-    #             # for bar, value in zip(bars, summary_data.values()):
-    #             #     height = bar.get_height()
-    #             #     axes[2].text(bar.get_x() + bar.get_width()/2., height + 0.01,
-    #             #                 f'{value:.3f}' if isinstance(value, float) else str(value),
-    #             #                 ha='center', va='bottom', fontsize=10)
-
-    #             plt.suptitle(f'Clustering Evaluation Results - {dataset_name}', fontsize=16, fontweight='bold')
-    #             plt.tight_layout()
-
-    #             # os.makedirs(save_path, exist=True)
-    #             plot_path = os.path.join(save_path, f'clustering_evaluation_{dataset_name}.png')
-    #             plt.savefig(plot_path, dpi=300, bbox_inches='tight')
-    #             plt.close()
-
-    #             print(f"Clustering evaluation plots saved to: {plot_path}")
-
-    #         except Exception as e:
-    #             print(f"Warning: Could not save clustering plots: {e}")
-
-    #     # Additional clustering analysis
-    #     # cluster_analysis = self._analyze_cluster_structure(X_real, X_synth)
-        
-    #     # print results:
-    #     cl_res = { 
-    #         'detailed':{ 
-    #             'feature_names': feature_names_clean,
-    #             'real_values': real_values_clean,
-    #             'synth_values': synth_values_clean,
-    #             'similarity_scores': similarity_scores},
-
-    #         'summary':{
-    #             'mean_similarity': np.mean(similarity_scores) if len(similarity_scores) > 0 else 0.0}
-    #         # 'cluster_analysis': cluster_analysis
-    #         }
-    #     print(f" results of clustering analysis: {cl_res}")
-
-    #     return cl_res
-    
-  
-    #-----------------------------------------------------------------------------------------------------#
     def complexity_evaluation(self, X_real, y_real, X_synth, y_synth, save_path=None, dataset_name="dataset", k=3, minority_class=None):
         """
         Evaluate data complexity using problexity package.
@@ -1740,73 +1584,7 @@ class SyntheticDataEvaluator:
         
         return np.array(np.concatenate(X_sampled)), np.array(np.concatenate(y_sampled))
    
-    def _analyze_cluster_structure(self, X_real, X_synth):
-        """
-        Analyze cluster structure differences between real and synthetic data.
-        """
-        try:
-            # Optimal number of clusters using elbow method
-            def find_optimal_k(X, max_k=10):
-                inertias = []
-                K_range = range(2, min(max_k, len(X)//2))
-                for k in K_range:
-                    kmeans = KMeans(n_clusters=k, random_state=self.random_state)
-                    kmeans.fit(X)
-                    inertias.append(kmeans.inertia_)
-                
-                # Simple elbow detection
-                if len(inertias) > 2:
-                    diffs = np.diff(inertias)
-                    optimal_k = K_range[np.argmin(diffs[1:]) + 1]
-                else:
-                    optimal_k = K_range[0] if K_range else 2
-                
-                return optimal_k, inertias
-            
-            # Find optimal clusters for both datasets
-            k_real, inertias_real = find_optimal_k(X_real)
-            k_synth, inertias_synth = find_optimal_k(X_synth)
-            
-            # Cluster with optimal k
-            kmeans_real = KMeans(n_clusters=k_real, random_state=self.random_state)
-            kmeans_synth = KMeans(n_clusters=k_synth, random_state=self.random_state)
-            
-            labels_real = kmeans_real.fit_predict(X_real)
-            labels_synth = kmeans_synth.fit_predict(X_synth)
-            
-            # Calculate cluster quality metrics
-            from sklearn.metrics import silhouette_score, calinski_harabasz_score
-            
-            sil_real = silhouette_score(X_real, labels_real)
-            sil_synth = silhouette_score(X_synth, labels_synth)
-            
-            ch_real = calinski_harabasz_score(X_real, labels_real)
-            ch_synth = calinski_harabasz_score(X_synth, labels_synth)
-            
-            return {
-                'optimal_k_real': k_real,
-                'optimal_k_synth': k_synth,
-                'silhouette_real': sil_real,
-                'silhouette_synth': sil_synth,
-                'calinski_harabasz_real': ch_real,
-                'calinski_harabasz_synth': ch_synth,
-                'silhouette_similarity': 1 - abs(sil_real - sil_synth),
-                'ch_similarity': 1 / (1 + abs(ch_real - ch_synth) / (ch_real + 1e-8))
-            }
-            
-        except Exception as e:
-            print(f"Warning: Cluster structure analysis failed: {e}")
-            return {
-                'optimal_k_real': 0,
-                'optimal_k_synth': 0,
-                'silhouette_real': 0.0,
-                'silhouette_synth': 0.0,
-                'calinski_harabasz_real': 0.0,
-                'calinski_harabasz_synth': 0.0,
-                'silhouette_similarity': 0.0,
-                'ch_similarity': 0.0,
-                'error': str(e)
-            }
+ 
     
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
 from classifier_eval import evaluate_classification_model
 from typing import Tuple, Optional
-from hardness_module_improved import HardnessCalculator, CVAEHardnessIntegrator
+from hardness_module import HardnessCalculator, CVAEHardnessIntegrator
 
 # device related -> GPU or CPU
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -270,7 +270,7 @@ CURRICULUM_EPOCHS = (N_EPOCHS*0.3, N_EPOCHS*0.3, N_EPOCHS*0.4)  # Epochs for eac
 MASTER_SEED = 42  # Master seed for reproducibility
 random.seed(MASTER_SEED)  # Random state for reproducibility
 # N_RUNS = 3
-random_seeds = random.sample(range(1, 10**6), 3)  # Random seeds for different runs FIX IT TO 5 RANDOM SEEDS
+random_seeds = random.sample(range(1, 10**6), 1)  # Random seeds for different runs FIX IT TO N RANDOM SEEDS
 
 def main():
 
@@ -278,9 +278,10 @@ def main():
     datasets = ['thyroid_sick']
 
     weighting_strategies = ['curriculum', 'static', 'self_paced']
-    hardness_metrics = [None, 'relative_entropy','pca_contribution', 'feature_kDN', 'feature_DS', 'feature_DCP', 'feature_TD_P',
-                   'feature_TD_U', 'feature_CL', 'feature_CLD', 'feature_MV', 'feature_CB', 'feature_N1', 'feature_N2', 'feature_LSC', 
-                   'feature_LSR', 'feature_Harmfulness', 'feature_F1', 'feature_F2', 'feature_F3', 'feature_F4']
+    hardness_metrics = ['feature_kDN']
+    # hardness_metrics = [None, 'relative_entropy','pca_contribution', 'feature_kDN', 'feature_DS', 'feature_DCP', 'feature_TD_P',
+    #                'feature_TD_U', 'feature_CL', 'feature_CLD', 'feature_MV', 'feature_CB', 'feature_N1', 'feature_N2', 'feature_LSC', 
+    #                'feature_LSR', 'feature_Harmfulness', 'feature_F1', 'feature_F2', 'feature_F3', 'feature_F4']
     seeds = list(random_seeds)  # Different seeds for reproducibility CHANGE THIS 
 
 
@@ -304,7 +305,7 @@ def main():
     fid_save_dir = "fidelity_results_imblearn"
     os.makedirs(fid_save_dir, exist_ok=True)
 
-    fidelity_views = {'statistical':{}, 'hardness':{}, 'complexity':{}, 'clustering':{}, 'topological':{}}
+    fidelity_views = {'statistical':{}, 'hardness':{}, 'complexity':{}, 'clustering':{}, 'topological':{}} # remove clustering view
 
     # for key in fidelity_views.keys():
 
@@ -450,8 +451,8 @@ def main():
             else:
                 df_new.to_csv(csv_path, index=False)
 
-        # IMPORTANT:
-        # DIstributional Fidelity evaluation using KS test from sdv-metrics
+
+
         # Evaluate similarity of synthetic samples to real minority samples
         from sdv_metrics import evaluate_synthetic_data
         print("="*50)
@@ -517,7 +518,7 @@ def main():
         result_cols = list(result[0].keys())
         pd.DataFrame(result, columns=result_cols).to_csv(all_results_path, mode='a', header=not os.path.exists(all_results_path) , index=False) # or os.stat(all_results_path).st_size == 0
 
-        #\
+        
         # Save individual results as CSV
         experiment_dir = f"{results_dir}/{dataset_name}_{hardness_metric}_seed{seed}"
         os.makedirs(experiment_dir, exist_ok=True)

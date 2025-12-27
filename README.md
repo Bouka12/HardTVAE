@@ -1,7 +1,6 @@
 # HardVAE: Hardness-Aware Synthetic Data Generation for Imbalanced Classification
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 A comprehensive Python framework for evaluating and generating high-quality synthetic minority data in imbalanced classification scenarios. HardVAE integrates **instance hardness metrics** with **Conditional Variational Autoencoders (CVAEs)** to produce synthetic data that preserves the complexity characteristics of the original minority class.
@@ -41,6 +40,7 @@ Class imbalance is a fundamental challenge in machine learning, where minority c
 
 ### 📈 Comprehensive Visualization & Reporting
 - **CSV Exports**: Detailed metrics for further analysis
+- **Visualizations**: Plots for utility/fidelity analysis
 
 ## 📋 Requirements
 
@@ -70,32 +70,20 @@ imblearn>=0.8.0       # Imbalanced learning utilities
 
 ## 🔧 Installation
 
-### Option 1: Clone and Install from Source
+### Clone and Install from Source
 ```bash
 git clone https://github.com/Bouka12/HardVAE.git
 cd HardVAE
 pip install -r requirements.txt
 ```
 
-### Option 2: Install with Optional Dependencies
-```bash
-# For full functionality including topological analysis
-pip install -r requirements-full.txt
-```
-
-### Option 3: Development Installation
-```bash
-git clone https://github.com/Bouka12/HardVAE.git
-cd HardVAE
-pip install -e .
-```
 
 ## 📖 Quick Start
 
 ### Basic Usage: Evaluate Synthetic Data Quality
 
 ```python
-from hardvae.evaluation import SyntheticDataEvaluator
+from synthetic_data_evaluator import SyntheticDataEvaluator
 import numpy as np
 
 # Prepare your data
@@ -114,16 +102,13 @@ results = evaluator.evaluate_all(
     save_path="./results",
     dataset_name="my_dataset"
 )
-
-# Access results
-print(f"Overall Quality Score: {results['summary']['overall_quality_score']:.3f}")
-print(f"Assessment: {results['summary']['assessment']}")
 ```
+
 
 ### Calculate Instance Hardness
 
 ```python
-from hardvae.core import HardnessCalculator
+from hardness_module import HardnessCalculator
 
 # Initialize calculator
 hardness_calc = HardnessCalculator(random_state=42)
@@ -137,90 +122,17 @@ hardness_scores = hardness_calc.calculate_hardness_scores(
 print(hardness_scores.head())
 ```
 
-### Train Hardness-Aware CVAE
-
-```python
-from hardvae.integration import HardnessAwareCVAETrainer, TabularCVAE
-from hardvae.core import HardnessCalculator
-
-# Initialize CVAE
-cvae = TabularCVAE(
-    input_dim=X_train.shape[1],
-    latent_dim=10,
-    condition_dim=1,
-    hidden_dims=[128, 64]
-)
-
-# Initialize hardness calculator
-hardness_calc = HardnessCalculator()
-
-# Initialize trainer
-trainer = HardnessAwareCVAETrainer(cvae, hardness_calc)
-
-# Train with hardness weighting
-trainer.train(
-    X_train, y_train,
-    epochs=100,
-    batch_size=32,
-    hardness_metric='feature_kDN'
-)
-
-# Generate synthetic data
-X_synthetic = trainer.generate(n_samples=500, condition=1)
-```
 
 ## 📊 Evaluation Results Interpretation
 
 
 ### Component Scores
-Each evaluation component returns a similarity score [0, 1]:
+Each evaluation component returns 
 - **Statistical**: Distribution matching quality
 - **Topological**: Shape and structure preservation
 - **Hardness**: Instance difficulty pattern similarity
 - **Complexity**: Data complexity metric preservation
-- **Utility**: Downstream task performance
 
-## 📁 Project Structure
-
-```
-HardVAE/
-├── hardvae/                          # Main package
-│   ├── __init__.py
-│   ├── core/                         # Core hardness functionality
-│   │   ├── __init__.py
-│   │   ├── hardness.py              # HardnessCalculator class
-│   │   └── metrics.py               # Hardness metric definitions
-│   ├── evaluation/                   # Evaluation framework
-│   │   ├── __init__.py
-│   │   ├── evaluator.py             # SyntheticDataEvaluator class
-│   │   ├── visualizer.py            # Visualization utilities
-│   │   └── metrics.py               # Evaluation metrics
-│   ├── integration/                  # CVAE integration
-│   │   ├── __init__.py
-│   │   ├── cvae.py                  # TabularCVAE architecture
-│   │   ├── trainer.py               # HardnessAwareCVAETrainer
-│   │   └── utils.py                 # Integration utilities
-│   └── utils/                        # General utilities
-│       ├── __init__.py
-│       ├── data.py                  # Data loading and preprocessing
-│       └── config.py                # Configuration management
-├── examples/                         # Example scripts
-│   ├── basic_evaluation.py
-│   ├── hardness_calculation.py
-│   ├── cvae_training.py
-│   └── full_pipeline.py
-├── tests/                            # Unit tests
-│   ├── test_hardness.py
-│   ├── test_evaluation.py
-│   └── test_cvae.py
-├── docs/                             # Documentation
-│   └── data/                         # Results
-├── requirements.txt                  # Core dependencies
-├── requirements-full.txt             # All dependencies
-├── setup.py                          # Package setup
-├── LICENSE
-└── README.md
-```
 
 
 
@@ -240,23 +152,7 @@ If you use HardVAE in your research, please cite:
 }
 ```
 
-## 📚 Documentation
 
-- **[Examples](examples/)**: Complete working examples
-
-
-## 🙏 Acknowledgments
-
-- PyHard library for hardness metric calculations
-- Problexity for data complexity analysis
-- Ripser and Persim for topological data analysis
-- Scikit-learn and PyTorch communities
-
-## 📧 Contact & Support
-
-For questions, issues, or suggestions:
-- Open an issue on [GitHub Issues](https://github.com/Bouka12/HardVAE/issues)
-- Contact: anonymous
 
 ## 📖 References
 
@@ -265,7 +161,4 @@ For questions, issues, or suggestions:
 3. Smith, M. R., et al. (2014). "Instance hardness levels for instance filtering and weighting." *Journal of Machine Learning Research*, 15(1), 2049-2080.
 4. Jordon, J., et al. (2022). "Synthetic data generation and adaptation for machine learning." *Proceedings of the 2022 ACM Conference on Fairness, Accountability, and Transparency*.
 
----
 
-**Last Updated**: December 2025  
-**Version**: 1.0.0

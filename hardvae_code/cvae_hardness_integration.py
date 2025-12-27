@@ -22,7 +22,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
 from classifier_eval import evaluate_classification_model
 from typing import Tuple, Optional
-from hardness_module_improved import HardnessCalculator, CVAEHardnessIntegrator
+from original_code.hardness_module import HardnessCalculator, CVAEHardnessIntegrator
 
 # device related -> GPU or CPU
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -334,7 +334,7 @@ def main():
     # datasets = ['Hypothyroid']#, 'ILPD', 'KidneyDisease', 'NewThyroid1']
 
     # PART 3
-    datasets = ['Haberman']#, 'Thoracic']
+    datasets = ['BCWDD']#, 'Thoracic']
     # datasets = ['BCWDD',  'Haberman', 'HeartCleveland', 'Hepatitis']
     # datasets = [    'BCWDD',  'Haberman', 'HeartCleveland', 'Hepatitis', 'Hypothyroid', 'ILPD', 'KidneyDisease', 'NewThyroid1', 'NewThyroid2', 'Pima', 'Thoracic', 'Vertebral']
 

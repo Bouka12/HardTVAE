@@ -87,7 +87,7 @@ def run_evaluation_example():
     
     # Create different quality synthetic data
     methods = ['noise', 'interpolation', 'poor']
-    results_comparison = {'statistical':{}, 'hardness':{}, 'complexity':{}, 'clustering':{}, 'topological':{}}
+    results_comparison = {'statistical':{}, 'hardness':{}, 'complexity':{},  'topological':{}}
     
     # Create output directory
     output_dir = "evaluation_results"
@@ -209,20 +209,6 @@ def run_quick_test():
         print(f"✓ Statistical evaluation: {stat_result['mean_similarity']:.3f}")
     except Exception as e:
         print(f"✗ Statistical evaluation failed: {e}")
-    
-    try:
-        # Clustering evaluation
-        cluster_result = evaluator.clustering_evaluation(X_real, y_real, X_synth, y_synth)
-        print(f"✓ Clustering evaluation: {cluster_result['mean_similarity']:.3f}")
-    except Exception as e:
-        print(f"✗ Clustering evaluation failed: {e}")
-    
-    # try:
-    #     # Utility evaluation
-    #     utility_result = evaluator.utility_evaluation(X_real, y_real, X_synth, y_synth)
-    #     print(f"✓ Utility evaluation: {utility_result['utility_quality']:.3f}")
-    # except Exception as e:
-    #     print(f"✗ Utility evaluation failed: {e}")
     
     try:
         # Hardness evaluation

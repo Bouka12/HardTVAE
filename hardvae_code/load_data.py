@@ -1,3 +1,9 @@
+
+"""
+load_data.py
+This module provides functionality to load and preprocess data from a CSV file used for the input data
+"""
+
 from sklearn.model_selection import train_test_split
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
