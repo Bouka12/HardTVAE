@@ -103,9 +103,7 @@ HARDNESS_METRICS = [
     'feature_F2',           # Fisher Criterion 2
     'feature_F3',           # Fisher Criterion 3
     'feature_F4',           # Fisher Criterion 4
-    # Custom Metrics (2) -> Optional 
-    'relative_entropy',     # Relative entropy-based hardness
-    'pca_contribution'      # PCA contribution-based hardness
+
 ]
 
 # Baseline (None) only uses 'static' weighting strategy
@@ -120,7 +118,7 @@ Three classifiers are used for downstream task evaluation:
 CLASSIFIERS = [
     'RandomForest',         # Random Forest (100 estimators)
     'SVM',                  # Support Vector Machine (RBF kernel)
-    'LogisticRegression'    # Logistic Regression (L2 penalty)
+    'GNB'    # 
 ]
 ```
 
@@ -155,7 +153,7 @@ The experimental space consists of:
 |-----------|-------|---------|
 | **Weighting Strategies** | 3 | static, curriculum, self-paced |
 | **Hardness Metrics** | 20 | 18 PyHard + 2 custom (+ 1 None) |
-| **Classifiers** | 3 | RandomForest, SVM, LogisticRegression |
+| **Classifiers** | 3 | RandomForest, SVM, GNB |
 | **Datasets** | 10 | Medical datasets |
 | **Random Runs** | 3 | Independent repetitions |
 
@@ -307,7 +305,6 @@ results = evaluator.evaluate_all(
 # 3. Hardness fidelity
 # 4. Topological fidelity
 # 5. Utility fidelity
-# 6. Clustering fidelity
 ```
 
 ### Step 7: Evaluate Utility
@@ -351,7 +348,6 @@ for dataset in DATASETS:
                     'hardness_fidelity': ...,
                     'topological_fidelity': ...,
                     'utility_fidelity': ...,
-                    'clustering_fidelity': ...,
                     'classifier_performance': ...
                 }
                 results_df = pd.concat([results_df, pd.DataFrame([result_row])])
@@ -642,8 +638,8 @@ To verify reproducibility:
 All code, random seeds, and experimental configurations are available in:
 
 - **GitHub Repository**: [https://github.com/Bouka12/HardVAE]
-- **Companion Website**: [Your Website URL]
-- **Supplementary Materials**: [Your Supplementary Materials URL]
+- **Companion Website**: []
+- **Supplementary Materials**: []
 
 This enables complete replication of the entire experimental pipeline.
 
@@ -672,7 +668,7 @@ From the same file:
 # Line 278-284
 datasets = ['thyroid_sick']  # Extended to 10 datasets
 weighting_strategies = ['curriculum', 'static', 'self_paced']
-hardness_metrics = [None, 'relative_entropy', 'pca_contribution', 'feature_kDN', ...]
+hardness_metrics = [None, 'feature_kDN', ...]
 seeds = list(random_seeds)
 ```
 
@@ -692,17 +688,3 @@ This reproducibility guide ensures that:
 
 ---
 
-## 📞 Support
-
-For questions about reproducibility:
-
-1. Check this guide first
-2. Review the code comments in `cvae_hardness_integration_imblearn_2.py` and related scripts in `/original_code`
-3. Check the GitHub repository for the latest code
-4. Contact the authors for clarification
-
----
-
-**Last Updated**: December 2025  
-**Version**: 1.0  
-**Status**: Ready for Publication
