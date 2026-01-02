@@ -7,9 +7,9 @@ A comprehensive Python framework for evaluating and generating high-quality synt
 
 ## 🎯 Overview
 
-Class imbalance is a fundamental challenge in machine learning, where minority class samples are underrepresented. Traditional oversampling methods like SMOTE generate synthetic data but often fail to preserve the **difficulty distribution** of minority instances. HardVAE addresses this by:
+Class imbalance is a fundamental challenge in machine learning, where minority class samples are underrepresented. Traditional oversampling methods like SMOTE generate synthetic data but often fail to preserve the **distribution** of minority instances. HardVAE addresses this by:
 
-1. **Quantifying instance hardness** using multiple metrics (PyHard + custom metrics)
+1. **Quantifying instance hardness** using multiple metrics (PyHard)
 2. **Integrating hardness into CVAE training** through weighted loss functions
 3. **Comprehensively evaluating** synthetic data quality across 5 dimensions:
    - Statistical fidelity (distribution matching)
@@ -23,9 +23,9 @@ Class imbalance is a fundamental challenge in machine learning, where minority c
 ### 📊 Multi-Dimensional Evaluation Framework
 - **Statistical Evaluation**: Feature-wise distribution similarity using meta-features and Kolmogorov-Smirnov tests
 - **Topological Data Analysis**: Persistent homology for shape and structure preservation
-- **Instance Hardness Analysis**: Nearest neighbor distance analysis and PyHard metrics
+- **Instance Hardness Analysis**: Meta-features from six groups: feature-base, geometry-based. etc
 - **Complexity Analysis**: Data complexity patterns using problexity package
-- **Utility Assessment**: Train-on-synthetic → test-on-real evaluation with multiple classifiers
+- **Utility Assessment**: Train-on-balanced data (mixed) → test-on-real evaluation with multiple classifiers
 
 ### 🔧 Hardness Calculation
 - **18+ PyHard Metrics**: Linear, neighborhood-based, network-based, and feature-based hardness measures
@@ -35,7 +35,7 @@ Class imbalance is a fundamental challenge in machine learning, where minority c
 ### 🧠 CVAE Integration
 - **Hardness-Aware Training**: Weighted loss functions based on instance difficulty
 - **Flexible Weighting Strategies**: Static, dynamic, and adaptive weighting schemes
-- **Conditional Generation**: Generate synthetic data conditioned on class labels
+- **Conditional Generation**: Generate synthetic data conditioned on class labels, adaptable for multi-class data
 - **Imbalanced Dataset Support**: Native handling of class imbalance
 
 ### 📈 Comprehensive Visualization & Reporting
@@ -46,26 +46,27 @@ Class imbalance is a fundamental challenge in machine learning, where minority c
 
 ### Core Dependencies
 ```
-numpy>=1.19.0
-pandas>=1.1.0
-torch>=1.9.0
-scikit-learn>=0.24.0
-scipy>=1.5.0
-matplotlib>=3.3.0
+numpy>=1.23.5,<2.0.0
+pandas>=1.5.3,<2.0.0
+torch>=2.6.0
+scikit-learn>=1.5.2,<2.0.0
+scipy>=1.13.0,<2.0.0
+matplotlib>=3.9.4,<4.0.0
+seaborn>=0.13.2,<1.0.0
 ```
 
 ### Evaluation & Hardness Metrics
 ```
 pymfe>=0.4.0          # Meta-feature extraction
 problexity>=1.0.0     # Data complexity metrics
-pyhard>=0.2.0         # Instance hardness metrics (optional but recommended)
-ripser>=0.0.16        # Topological data analysis (optional)
-persim>=0.2.0         # Persistence diagram comparison (optional)
+pyhard>=2.2.4         # Instance hardness metrics (optional but recommended)
+ripser>=0.6.12        # Topological data analysis 
+persim>=0.3.8         # Persistence diagram comparison 
 ```
 
 ### Utility Evaluation
 ```
-imblearn>=0.8.0       # Imbalanced learning utilities
+imblearn>=0.0      # Imbalanced learning utilities
 ```
 
 ## 🔧 Installation
