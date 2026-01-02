@@ -118,41 +118,6 @@ def run_evaluation_example():
         # Save the comparison results:
         save_comparison_results_to_csv(results_comparison, f"sample_{method}", output_dir )
         
-
-    #     # Print results_comparison and figure out later how to save such a file csv/json
-    #     # Print summary
-    #     summary = results['summary']
-    #     print(f"\n   Results for '{method}' method:")
-    #     print(f"   Overall Quality Score: {summary['overall_quality_score']:.3f}")
-    #     print(f"   Assessment: {summary['assessment']}")
-        
-    #     print("   Component Scores:")
-    #     for component, score in summary['component_scores'].items():
-    #         print(f"     {component.capitalize()}: {score:.3f}")
-        
-    #     if summary['recommendations']:
-    #         print("   Recommendations:")
-    #         for rec in summary['recommendations']:
-    #             print(f"     - {rec}")
-    
-    # # Compare methods
-    # print(f"\n4. Method Comparison:")
-    # print("-" * 30)
-    # comparison_df = pd.DataFrame({
-    #     method: {
-    #         'Overall Score': results['overall_quality_score'],
-    #         'Assessment': results['assessment'],
-    #         **results['component_scores']
-    #     }
-    #     for method, results in results_comparison.items()
-    # }).T
-    
-    # print(comparison_df.round(3))
-    
-    # # Save comparison
-    # comparison_path = os.path.join(output_dir, "method_comparison.csv")
-    # comparison_df.to_csv(comparison_path)
-    # print(f"\nResults saved to: {output_dir}")
     print(f"Comparison results: \n{results_comparison}")
 
 

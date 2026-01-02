@@ -5,7 +5,7 @@ Evaluation on imbalanced datasets
 
 
 This module demonstrates how to integrate the hardness module with a CVAE
-for tabular  data synthesis with imbalanced settings.
+for tabular  data synthesis with imbalanced settings from local folders.
 """
 import os
 import itertools
@@ -22,7 +22,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
 from classifier_eval import evaluate_classification_model
 from typing import Tuple, Optional
-from original_code.hardness_module import HardnessCalculator, CVAEHardnessIntegrator
+from hardness_module import HardnessCalculator, CVAEHardnessIntegrator
 
 # device related -> GPU or CPU
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -339,7 +339,7 @@ def main():
     # datasets = [    'BCWDD',  'Haberman', 'HeartCleveland', 'Hepatitis', 'Hypothyroid', 'ILPD', 'KidneyDisease', 'NewThyroid1', 'NewThyroid2', 'Pima', 'Thoracic', 'Vertebral']
 
     weighting_strategies = ['curriculum', 'static', 'self_paced']
-    hardness_metrics = [None, 'relative_entropy','pca_contribution', 'feature_kDN', 'feature_DS', 'feature_DCP', 'feature_TD_P',
+    hardness_metrics = [None, 'feature_kDN', 'feature_DS', 'feature_DCP', 'feature_TD_P',
                    'feature_TD_U', 'feature_CL', 'feature_CLD', 'feature_MV', 'feature_CB', 'feature_N1', 'feature_N2', 'feature_LSC', 
                    'feature_LSR', 'feature_Harmfulness', 'feature_F1', 'feature_F2', 'feature_F3', 'feature_F4']
     seeds = list(random_seeds)  # Different seeds for reproducibility CHANGE THIS 
@@ -349,14 +349,14 @@ def main():
 
     # Create the csv files of RESULTS_ALL and KS_RESULTS and update them with the results of each dataset and hardness metric on the airflow
     # Store results for all datasets and hardness metrics
-    RESULTS_DIR = "results_path"
+    RESULTS_DIR = "results_path" # -> Results directory path
     os.makedirs(RESULTS_DIR, exist_ok=True)
     plots_dir = f"{RESULTS_DIR}/plots"
     os.makedirs(plots_dir, exist_ok=True)
 
     # ✅ Create empty CSV files for all results and KS results if they don’t exist
-    all_results_path = os.path.join(RESULTS_DIR, 'all_classification_results.csv')
-    ks_results_path = os.path.join(RESULTS_DIR, 'all_ks_results.csv')
+    all_results_path = os.path.join(RESULTS_DIR, 'all_classification_results.csv') # -> classification results csv file
+    ks_results_path = os.path.join(RESULTS_DIR, 'all_ks_results.csv') # -> statistical similarity results csv file
 
     if not os.path.exists(all_results_path):
         pd.DataFrame().to_csv(all_results_path, index=False)
@@ -367,7 +367,7 @@ def main():
     fid_save_dir = "fidelity_results"
     os.makedirs(fid_save_dir, exist_ok=True)
 
-    fidelity_views = {'statistical':{}, 'hardness':{}, 'complexity':{}, 'clustering':{}, 'topological':{}}
+    fidelity_views = {'statistical':{}, 'hardness':{}, 'complexity':{},  'topological':{}}
 
     # for key in fidelity_views.keys():
 
@@ -384,8 +384,6 @@ def main():
             combinations.append((dataset_name, hardness_metric, seed, strategy))
 
     # Loop through valid combinations
-    # fidelity_views = {'statistical':{}, 'hardness':{}, 'complexity':{}, 'clustering':{}, 'topological':{}}
-
     for dataset_name, hardness_metric, seed, weighting_strategy in combinations: #itertools.product(datasets, hardness_metrics, seeds, weighting_strategies):
         print(f"\n=== Dataset: {dataset_name} | hardness metric: {hardness_metric} | Weighting strategy: {weighting_strategy} | Seed: {seed} ===")
         print("="*50)

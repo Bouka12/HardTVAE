@@ -26,6 +26,7 @@ def avgBoundaryAdherence(real_data, synthetic_data):
     for col in real_data.columns:
         avgBAdher[col] = BoundaryAdherence.compute(real_data[col], synthetic_data[col])
     return np.mean(list(avgBAdher.values()))
+
 # added similarity metric for numerical data
 def avgStatisticalSimilarity(real_data, synthetic_data):
     avgStatSim = {}

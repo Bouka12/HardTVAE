@@ -61,7 +61,7 @@ class HardnessCalculator:
         'feature_F1', 'feature_F2', 'feature_F3', 'feature_F4'
     ]
     
-    # Custom proposed metrics
+    # Custom proposed metrics -> We didn't use in this research 
     CUSTOM_METRICS = [
         'relative_entropy', 'pca_contribution' 
     ]

@@ -3,7 +3,7 @@ CVAE Integration Example with Hardness-Aware Training
 
 
 This module demonstrates how to integrate the hardness module with a CVAE
-for tabular  data synthesis with imbalanced datasets.
+for tabular  data synthesis with imbalanced datasets from `imblearn` python package.
 """
 import os
 import itertools
@@ -279,7 +279,7 @@ def main():
 
     weighting_strategies = ['curriculum', 'static', 'self_paced']
     hardness_metrics = ['feature_kDN']
-    # hardness_metrics = [None, 'relative_entropy','pca_contribution', 'feature_kDN', 'feature_DS', 'feature_DCP', 'feature_TD_P',
+    # hardness_metrics = [None, 'feature_kDN', 'feature_DS', 'feature_DCP', 'feature_TD_P',
     #                'feature_TD_U', 'feature_CL', 'feature_CLD', 'feature_MV', 'feature_CB', 'feature_N1', 'feature_N2', 'feature_LSC', 
     #                'feature_LSR', 'feature_Harmfulness', 'feature_F1', 'feature_F2', 'feature_F3', 'feature_F4']
     seeds = list(random_seeds)  # Different seeds for reproducibility CHANGE THIS 
@@ -287,14 +287,14 @@ def main():
 
     # Create the csv files of RESULTS_ALL and KS_RESULTS and update them with the results of each dataset and hardness metric on the airflow
     # Store results for all datasets and hardness metrics
-    RESULTS_DIR = "results_imblearn"
+    RESULTS_DIR = "results_imblearn" # -> Results path
     os.makedirs(RESULTS_DIR, exist_ok=True)
     plots_dir = f"{RESULTS_DIR}/plots"
     os.makedirs(plots_dir, exist_ok=True)
 
     # ✅ Create empty CSV files for all results and KS results if they don’t exist
-    all_results_path = os.path.join(RESULTS_DIR, 'all_classification_results_imblearn.csv')
-    ks_results_path = os.path.join(RESULTS_DIR, 'all_ks_results_imblearn.csv')
+    all_results_path = os.path.join(RESULTS_DIR, 'all_classification_results_imblearn.csv') # -> classification results csv file
+    ks_results_path = os.path.join(RESULTS_DIR, 'all_ks_results_imblearn.csv') # -> statistical similarity results csv file
 
     if not os.path.exists(all_results_path):
         pd.DataFrame().to_csv(all_results_path, index=False)
@@ -302,10 +302,10 @@ def main():
     if not os.path.exists(ks_results_path):
         pd.DataFrame().to_csv(ks_results_path, index=False)
 
-    fid_save_dir = "fidelity_results_imblearn"
+    fid_save_dir = "fidelity_results_imblearn" # -> fidelity results path
     os.makedirs(fid_save_dir, exist_ok=True)
 
-    fidelity_views = {'statistical':{}, 'hardness':{}, 'complexity':{}, 'clustering':{}, 'topological':{}} # remove clustering view
+    fidelity_views = {'statistical':{}, 'hardness':{}, 'complexity':{}, 'topological':{}} # remove clustering view
 
     # for key in fidelity_views.keys():
 
@@ -322,7 +322,6 @@ def main():
             combinations.append((dataset_name, hardness_metric, seed, strategy))
 
     # Loop through valid combinations
-    # fidelity_views = {'statistical':{}, 'hardness':{}, 'complexity':{}, 'clustering':{}, 'topological':{}}
 
     for dataset_name, hardness_metric, seed, weighting_strategy in combinations: #itertools.product(datasets, hardness_metrics, seeds, weighting_strategies):
         print(f"\n=== Dataset: {dataset_name} | hardness metric: {hardness_metric} | Weighting strategy: {weighting_strategy} | Seed: {seed} ===")
@@ -433,7 +432,7 @@ def main():
         )
         records = []
         for key in fidelity_views.keys():
-            csv_path = os.path.join(fid_save_dir, f"fidelity_results_{key}.csv")
+            csv_path = os.path.join(fid_save_dir, f"fidelity_results_{key}.csv") # -> results of each fidelity aspect
 
             record = {            
                 'dataset': dataset_name,
@@ -478,8 +477,10 @@ def main():
         print("="*50)
         print("="*50)
         synthetic_samp = np.concatenate([synthetic_samp, synthetic_labels], axis=1)
+
         # Convert to DataFrame for better visualization
         synthetic_samp = pd.DataFrame(synthetic_samp, columns=[f'feature_{i}' for i in range(X.shape[1])] + ['label'])
+        
         # concatenate the synthetic samples with the original data
         original_data = pd.DataFrame(X_train, columns=[f'feature_{i}' for i in range(X.shape[1])])
         original_data['label'] = y_train
