@@ -2,8 +2,6 @@
 Anlyse the effect of hardness weighting on the gradient decent.
     *   Compare the GD in the baseline and the HardVAE
     *   Check the loss components in the HardVAE (RE and KLD)
-
-    - Decide on the weighting nd normalization of components (weights)
     
 """
 import matplotlib.pyplot as plt
@@ -24,7 +22,6 @@ from torch.utils.data import DataLoader, TensorDataset
 from typing import Tuple, Optional
 from models.hardness import HardnessCalculator, CVAEHardnessIntegrator
 from load_data import load_data
-from gradients_stability_analysis.loss_viz import loss_plots
 from models.hardtvae import TabularCVAE, prepare_dataloader
 from utils import preprocess_data
 
@@ -224,62 +221,6 @@ class HardnessAwareCVAETrainer:
         return synthetic_data
 
 
-# def prepare_dataloader(X: np.ndarray, y: np.ndarray, batch_size: int = 32) -> DataLoader:
-#     """Prepare DataLoader with indices for hardness tracking."""
-#     # Convert to tensors
-#     X_tensor = torch.tensor(X, dtype=torch.float32)
-#     print(f"shape of X_tensor: {X_tensor.shape}")
-#     y_tensor = torch.tensor(y, dtype=torch.float32).unsqueeze(1)  # Condition
-#     print(f"shape of y_tensor: {y_tensor.shape}")
-#     indices_tensor = torch.arange(len(X))
-    
-#     # Create dataset and dataloader
-#     dataset = TensorDataset(X_tensor, y_tensor, indices_tensor)
-#     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-    
-#     return dataloader
-
-
-def plot_gradient_analysis(results, combination_name, plots_path):
-    """
-    Plot gradient analysis results.
-    results: dict { 'Epoch': [], ] }
-    """
-    plt.figure(figsize=(12, 5))
-    
-    # Comparaison de la stabilité des gradients
-    plt.subplot(1, 2, 1)
-    # for results in all_configs_results.it:
-    epochs = [r['epoch'] for r in results]
-    norms = [r['grad_norm'] for r in results]
-    plt.plot(epochs, norms, label=combination_name, marker='o')
-    plt.title('Gradient Stability (L2 Norm)')
-    plt.xlabel('Epoch')
-    plt.ylabel('Global Norm')
-    plt.legend()
-
-    # Comparaison de la convergence (Perte)
-    plt.subplot(1, 2, 2)
-    # for  results in all_configs_results:
-    epochs = [r['epoch'] for r in results]
-    losses = [r['total_loss'] for r in results]
-    plt.plot(epochs, losses, label=combination_name, linestyle='--')
-    plt.title('Loss Convergence')
-    plt.xlabel('Epoch')
-    plt.ylabel('Total Loss')
-    plt.legend()
-    
-    plt.tight_layout()
-    # Ensure the plots path exists
-    if  not os.path.exists(plots_path):
-        os.makedirs(plots_path)
-
-    # Save the figure
-    save_filename = f"{combination_name.replace(' ', '_').replace(',', "_")}_gd_analysis.png"
-    save_full_path = os.path.join(plots_path, save_filename)
-    plt.savefig(save_full_path)
-    plt.close()
-
 def save_run_metrics(dataset_name: str, training_loss: list, combination_name: str, seed: int, results_dir: str):
     """
     Save per-epoch metrics for one run to a CSV.
@@ -317,11 +258,8 @@ random_seeds = random.sample(range(1, 10**6), 10) # -> change to 10 later  # Ran
 def main():
 
     datasets = [ 'Hypothyroid', 'NewThyroid1', 'Vertebral']
-
-    # hardness_metrics = [None, 'kDN']
-    hardness_metrics = [None, 'kDN', 'DS', 'DCP', 'TD_P',
-                   'TD_U', 'CL', 'CLD', 'MV', 'CB', 'N1', 'N2', 'LSC', 
-                   'LSR', 'Harmfulness', 'F1', 'F2', 'F3', 'F4']
+    hardness_metrics = [None, 'DCP', 'TD_P', 'CLD', 'MV', 'CB', 'N2', 'LSC', 
+                   'LSR', 'Harmfulness', 'F1', 'F4']
     seeds = list(random_seeds)  # Different seeds for reproducibility CHANGE THIS 
     print(f"seeds = {seeds}")
 
@@ -396,93 +334,7 @@ def main():
                 # Save raw run data (we plot them in a separate script, averaged over the runs)
                 save_run_metrics(dataset_name=dataset_name, training_loss=training_loss, combination_name=model_name, seed=seed, results_dir=RESULTS_DIR)
                 
-                # dataset_name: str, training_loss: list, combination_name: str, seed: int, results_dir: str
 
-
-    # # Loop through valid combinations
-    # for dataset_name, hardness_metric, seed, weighting_strategy in combinations: #itertools.product(datasets, hardness_metrics, seeds, weighting_strategies):
-    #     print(f"\n=== Dataset: {dataset_name} | hardness metric: {hardness_metric} | Weighting strategy: {weighting_strategy} | Seed: {seed} ===")
-    #     print("="*50)
-    #     print("\n=== Step 1: Loading dataset ===")
-    #     # Path of the plots directory for the synthetic data evaluator: plots are specific to each combination and dataset so needs to make specific directory for each combination plots:
-    #     plot_dir = f"{plots_dir}/plots_{hardness_metric}_{weighting_strategy}_{seed}"
-    #     os.makedirs(plot_dir, exist_ok=True)
-    #     # # Load dataset
- 
-    #     # Train-test split -> change path 
-    #     DATA_PATH = f'data/processed/{dataset_name}.csv'
-        
-    #     # DO TRAIN-VAL-TEST SPLIT: VAL FOR MLE (TUNING) -> (23/04/2026) DONE 
-    #     X_train, y_train, X_val, y_val, X_test, y_test, majority_data, minority_data, imbalance_ratio = load_data(DATA_PATH, random_state=seed)
-
-    #     print("2. Initializingg the HardnessCalculator with seed...")        
-    #     hardness_calc = HardnessCalculator(random_state=seed)
-
-    #     # Initialize CVAE model
-    #     print("3. Initializing CVAE model...")
-    #     input_dim = X_train.shape[1]
-    #     latent_dim = 5
-    #     condition_dim = 1  # Binary condition
-        
-    #     model = TabularCVAE(
-    #         input_dim=input_dim,
-    #         latent_dim=latent_dim,
-    #         condition_dim=condition_dim,
-    #         hidden_dims=[128, 64, 32]
-    #     )
-        
-    #     # Initialize hardness integrator
-    #     print("4. Initializing the VAE HardnessIntegrator...")
-    #     hardness_integrator = CVAEHardnessIntegrator(
-    #         hardness_strategy= weighting_strategy 
-    #     )
-        
-    #     # Initialize trainer
-    #     print("Initializing the HardnessAware VAE Trainer...")
-    #     trainer = HardnessAwareCVAETrainer(
-    #         model=model,
-    #         hardness_calculator=hardness_calc,
-    #         hardness_integrator=hardness_integrator,
-    #         device=DEVICE
-    #     )
-        
-    #     print("Calculating the hardness score for training data...")
-    #     # Calculate hardness scores for training data
-    #     trainer.calculate_hardness_scores(X_train, y_train, [hardness_metric])
-
-    #     if trainer.hardness_scores is None:
-    #         if  hardness_metric is not None:
-    #             print(f"Skipping combination due to invalid hardness scores: Dataset={dataset_name}, Metric={hardness_metric}, Seed={seed}, Strategy={weighting_strategy}")
-    #             continue # skip to the next iteration of the loop
-
-    #     print("Preparing the dataloader...")
-    #     # Prepare data
-    #     dataloader = prepare_dataloader(X_train, y_train, batch_size=32)
-        
-    #     # Training loop
-    #     print("5. Training CVAE with hardness awareness...")
-    #     n_epochs = N_EPOCHS
-        
-    #     # Store the the values of the loss components during training and plot them for each combination and save them in subfolder in hardvae_code
-    #     training_loss = []
-    #     grad_norms = []
-    #     for epoch in range(n_epochs):
-    #         metrics = trainer.train_epoch(dataloader, epoch, n_epochs, beta=1.0)
-    #         metrics['epoch'] = epoch
-    #         training_loss.append(metrics) 
-    #         grad_norms.append(metrics)           
-    #         if epoch % 10 == 0:
-    #             print(f"Epoch {epoch:2d}: Loss={metrics['total_loss']:.4f}, "
-    #                 f"Recon={metrics['recon_loss']:.4f}, KL={metrics['kl_loss']:.4f}")
-    #     # Plot the loss componenets
-    #     print("Visualizing the loss componenets...")
-    #     # from loss_viz import loss_plots
-    #     combination_name = str(f"{dataset_name},{hardness_metric},{seed},{weighting_strategy}")
-    #     loss_plots(training_loss, combination_name,"training_loss_plots")
-
-    #     print("Visualizing the Grad norms...")
-    #     grad_norm_plots_path = "./gd_plots/"
-    #     plot_gradient_analysis(grad_norms, combination_name, grad_norm_plots_path)
 
 
 if __name__ == "__main__":

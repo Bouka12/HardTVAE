@@ -1,0 +1,29 @@
+# Python bytecode
+**__pycache__/
+**/*.pyc
+*.pyo
+
+# Results and outputs
+results/
+**/results/
+**/Results*/
+**/RESULTS*/
+**/[Rr][Ee][Ss][Uu][Ll][Tt][Ss]*/
+
+**/*.csv
+**/*.dat 
+*.xlsx
+*.png        # optional — if plots are auto-generated
+*.pdf        # optional — same reason
+
+# Processed data (can be regenerated via utils.py)
+data/processed/
+
+# Jupyter/editor noise
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# OS noise
+.DS_Store
+Thumbs.db
