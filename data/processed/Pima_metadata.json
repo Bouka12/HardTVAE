@@ -1,0 +1,32 @@
+{
+    "columns": {
+        "num__Preg": {
+            "sdtype": "numerical"
+        },
+        "num__Plas": {
+            "sdtype": "numerical"
+        },
+        "num__Pres": {
+            "sdtype": "numerical"
+        },
+        "num__Skin": {
+            "sdtype": "numerical"
+        },
+        "num__Insu": {
+            "sdtype": "numerical"
+        },
+        "num__Mass": {
+            "sdtype": "numerical"
+        },
+        "num__Pedi": {
+            "sdtype": "numerical"
+        },
+        "num__Age": {
+            "sdtype": "numerical"
+        },
+        "Outcome": {
+            "sdtype": "categorical"
+        }
+    },
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1"
+}

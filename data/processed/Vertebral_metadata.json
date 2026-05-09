@@ -1,0 +1,26 @@
+{
+    "columns": {
+        "num__pelvic_incidence": {
+            "sdtype": "numerical"
+        },
+        "num__pelvic_tilt": {
+            "sdtype": "numerical"
+        },
+        "num__lumbar_lordosis_angle": {
+            "sdtype": "numerical"
+        },
+        "num__sacral_slope": {
+            "sdtype": "numerical"
+        },
+        "num__pelvic_radius": {
+            "sdtype": "numerical"
+        },
+        "num__degree_spondylolisthesis": {
+            "sdtype": "numerical"
+        },
+        "Outcome": {
+            "sdtype": "categorical"
+        }
+    },
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1"
+}

@@ -1,0 +1,119 @@
+{
+    "columns": {
+        "num__PRE4": {
+            "sdtype": "numerical"
+        },
+        "num__PRE5": {
+            "sdtype": "numerical"
+        },
+        "num__AGE": {
+            "sdtype": "numerical"
+        },
+        "cat__DGN_DGN1": {
+            "sdtype": "categorical"
+        },
+        "cat__DGN_DGN2": {
+            "sdtype": "categorical"
+        },
+        "cat__DGN_DGN3": {
+            "sdtype": "categorical"
+        },
+        "cat__DGN_DGN4": {
+            "sdtype": "categorical"
+        },
+        "cat__DGN_DGN5": {
+            "sdtype": "categorical"
+        },
+        "cat__DGN_DGN6": {
+            "sdtype": "categorical"
+        },
+        "cat__DGN_DGN8": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE10_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE10_T": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE11_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE11_T": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE14_OC11": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE14_OC12": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE14_OC13": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE14_OC14": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE17_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE17_T": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE19_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE19_T": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE25_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE25_T": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE30_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE30_T": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE32_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE32_T": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE6_PRZ0": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE6_PRZ1": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE6_PRZ2": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE7_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE7_T": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE8_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE8_T": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE9_F": {
+            "sdtype": "categorical"
+        },
+        "cat__PRE9_T": {
+            "sdtype": "categorical"
+        },
+        "Outcome": {
+            "sdtype": "categorical"
+        }
+    },
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1"
+}

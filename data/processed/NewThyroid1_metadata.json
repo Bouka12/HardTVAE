@@ -1,0 +1,23 @@
+{
+    "columns": {
+        "num__T3resin": {
+            "sdtype": "numerical"
+        },
+        "num__Thyroxin": {
+            "sdtype": "numerical"
+        },
+        "num__Triiodothyronine": {
+            "sdtype": "numerical"
+        },
+        "num__Thyroidstimulating": {
+            "sdtype": "numerical"
+        },
+        "num__TSH_value": {
+            "sdtype": "numerical"
+        },
+        "Outcome": {
+            "sdtype": "categorical"
+        }
+    },
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1"
+}

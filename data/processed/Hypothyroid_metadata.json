@@ -1,0 +1,131 @@
+{
+    "columns": {
+        "num__age": {
+            "sdtype": "numerical"
+        },
+        "num__TSH": {
+            "sdtype": "numerical"
+        },
+        "num__T3": {
+            "sdtype": "numerical"
+        },
+        "num__TT4": {
+            "sdtype": "numerical"
+        },
+        "num__T4U": {
+            "sdtype": "numerical"
+        },
+        "num__FTI": {
+            "sdtype": "numerical"
+        },
+        "cat__I131 treatment_f": {
+            "sdtype": "categorical"
+        },
+        "cat__I131 treatment_t": {
+            "sdtype": "categorical"
+        },
+        "cat__goitre_f": {
+            "sdtype": "categorical"
+        },
+        "cat__goitre_t": {
+            "sdtype": "categorical"
+        },
+        "cat__hypopituitary_f": {
+            "sdtype": "categorical"
+        },
+        "cat__lithium_f": {
+            "sdtype": "categorical"
+        },
+        "cat__lithium_t": {
+            "sdtype": "categorical"
+        },
+        "cat__on antithyroid medication_f": {
+            "sdtype": "categorical"
+        },
+        "cat__on antithyroid medication_t": {
+            "sdtype": "categorical"
+        },
+        "cat__on thyroxine_f": {
+            "sdtype": "categorical"
+        },
+        "cat__on thyroxine_t": {
+            "sdtype": "categorical"
+        },
+        "cat__pregnant_f": {
+            "sdtype": "categorical"
+        },
+        "cat__pregnant_t": {
+            "sdtype": "categorical"
+        },
+        "cat__psych_f": {
+            "sdtype": "categorical"
+        },
+        "cat__psych_t": {
+            "sdtype": "categorical"
+        },
+        "cat__query hyperthyroid_f": {
+            "sdtype": "categorical"
+        },
+        "cat__query hyperthyroid_t": {
+            "sdtype": "categorical"
+        },
+        "cat__query hypothyroid_f": {
+            "sdtype": "categorical"
+        },
+        "cat__query hypothyroid_t": {
+            "sdtype": "categorical"
+        },
+        "cat__query on thyroxine_f": {
+            "sdtype": "categorical"
+        },
+        "cat__query on thyroxine_t": {
+            "sdtype": "categorical"
+        },
+        "cat__referral source_STMW": {
+            "sdtype": "categorical"
+        },
+        "cat__referral source_SVHC": {
+            "sdtype": "categorical"
+        },
+        "cat__referral source_SVHD": {
+            "sdtype": "categorical"
+        },
+        "cat__referral source_SVI": {
+            "sdtype": "categorical"
+        },
+        "cat__referral source_other": {
+            "sdtype": "categorical"
+        },
+        "cat__sex_F": {
+            "sdtype": "categorical"
+        },
+        "cat__sex_M": {
+            "sdtype": "categorical"
+        },
+        "cat__sex_nan": {
+            "sdtype": "categorical"
+        },
+        "cat__sick_f": {
+            "sdtype": "categorical"
+        },
+        "cat__sick_t": {
+            "sdtype": "categorical"
+        },
+        "cat__thyroid surgery_f": {
+            "sdtype": "categorical"
+        },
+        "cat__thyroid surgery_t": {
+            "sdtype": "categorical"
+        },
+        "cat__tumor_f": {
+            "sdtype": "categorical"
+        },
+        "cat__tumor_t": {
+            "sdtype": "categorical"
+        },
+        "Outcome": {
+            "sdtype": "categorical"
+        }
+    },
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1"
+}

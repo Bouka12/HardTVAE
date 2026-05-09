@@ -1,0 +1,98 @@
+{
+    "columns": {
+        "num__radius1": {
+            "sdtype": "numerical"
+        },
+        "num__texture1": {
+            "sdtype": "numerical"
+        },
+        "num__perimeter1": {
+            "sdtype": "numerical"
+        },
+        "num__area1": {
+            "sdtype": "numerical"
+        },
+        "num__smoothness1": {
+            "sdtype": "numerical"
+        },
+        "num__compactness1": {
+            "sdtype": "numerical"
+        },
+        "num__concavity1": {
+            "sdtype": "numerical"
+        },
+        "num__concave_points1": {
+            "sdtype": "numerical"
+        },
+        "num__symmetry1": {
+            "sdtype": "numerical"
+        },
+        "num__fractal_dimension1": {
+            "sdtype": "numerical"
+        },
+        "num__radius2": {
+            "sdtype": "numerical"
+        },
+        "num__texture2": {
+            "sdtype": "numerical"
+        },
+        "num__perimeter2": {
+            "sdtype": "numerical"
+        },
+        "num__area2": {
+            "sdtype": "numerical"
+        },
+        "num__smoothness2": {
+            "sdtype": "numerical"
+        },
+        "num__compactness2": {
+            "sdtype": "numerical"
+        },
+        "num__concavity2": {
+            "sdtype": "numerical"
+        },
+        "num__concave_points2": {
+            "sdtype": "numerical"
+        },
+        "num__symmetry2": {
+            "sdtype": "numerical"
+        },
+        "num__fractal_dimension2": {
+            "sdtype": "numerical"
+        },
+        "num__radius3": {
+            "sdtype": "numerical"
+        },
+        "num__texture3": {
+            "sdtype": "numerical"
+        },
+        "num__perimeter3": {
+            "sdtype": "numerical"
+        },
+        "num__area3": {
+            "sdtype": "numerical"
+        },
+        "num__smoothness3": {
+            "sdtype": "numerical"
+        },
+        "num__compactness3": {
+            "sdtype": "numerical"
+        },
+        "num__concavity3": {
+            "sdtype": "numerical"
+        },
+        "num__concave_points3": {
+            "sdtype": "numerical"
+        },
+        "num__symmetry3": {
+            "sdtype": "numerical"
+        },
+        "num__fractal_dimension3": {
+            "sdtype": "numerical"
+        },
+        "Outcome": {
+            "sdtype": "categorical"
+        }
+    },
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1"
+}

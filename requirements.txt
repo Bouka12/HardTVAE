@@ -1,30 +1,67 @@
-# Core Dependencies
-numpy>=1.23.5,<2.0.0
-pandas>=1.5.3,<2.0.0
-torch>=2.6.0
-scikit-learn>=1.5.2,<2.0.0
-scipy>=1.13.0,<2.0.0
-matplotlib>=3.9.4,<4.0.0
-seaborn>=0.13.2,<1.0.0
+# Core scientific
+numpy==2.2.6
+pandas==2.3.3
+scipy==1.17.1
+scikit-learn==1.8.0
+statsmodels==0.14.6
 
-# Meta-feature and Complexity Analysis
-pymfe>=0.4.3
-problexity>=0.5.9
+# Deep Learning (already installed — skip torch)
+# torch==2.6.0+cu124  ← already installed
 
-# Hardness Metrics (Recommended)
-pyhard>=2.2.4
+# Imbalanced learning
+imbalanced-learn==0.14.1
+imblearn==0.0
 
-# Imbalanced Learning
-imblearn>=0.0
+# Generative models / SDV stack
+ctgan==0.12.1
+sdv==1.36.1
+sdmetrics==0.28.0
+rdt==1.21.0
+copulas==0.14.1
+deepecho==0.8.1
+
+# Boosting classifiers (used in utility evaluation)
+xgboost==3.2.0
+lightgbm==4.6.0
+catboost==1.2.10
+
+# Topological / hardness analysis
+ripser==0.6.14
+persim==0.3.8
+problexity==0.5.11
+pymfe==0.4.4
+gower==0.1.2
 
 # Visualization
-plotly>=5.24.1
+matplotlib==3.10.7
+seaborn==0.13.2
+plotly==6.7.0
 
-# Optional: Topological Data Analysis
-ripser>=0.6.12
-persim>=0.3.8
+# Utilities
+tqdm==4.67.3
+joblib==1.5.3
+PyYAML==6.0.3
+tabulate==0.9.0
+appdirs==1.4.4
+Faker==40.15.0
+cloudpickle==3.1.2
+packaging==26.2
+six==1.17.0
+requests==2.33.1
+python-dateutil==2.9.0.post0
+pytz==2026.1.post1
+tzdata==2026.2
 
-# Optional: Advanced Metrics
-sdmetrics>=0.18.0
+# Graph / topology
+networkx==3.6.1
+igraph==1.0.0
 
+# Numerical extras
+numba==0.63.1
+sympy==1.13.1
+mpmath==1.3.0
 
+# Data extras
+openpyxl==3.1.5
+pyarrow==22.0.0
+patsy==1.0.2

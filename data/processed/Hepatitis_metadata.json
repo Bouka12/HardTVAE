@@ -1,0 +1,65 @@
+{
+    "columns": {
+        "num__Age": {
+            "sdtype": "numerical"
+        },
+        "num__Sex": {
+            "sdtype": "categorical"
+        },
+        "num__Steroid": {
+            "sdtype": "numerical"
+        },
+        "num__Antivirals": {
+            "sdtype": "categorical"
+        },
+        "num__Fatigue": {
+            "sdtype": "numerical"
+        },
+        "num__Malaise": {
+            "sdtype": "numerical"
+        },
+        "num__Anorexia": {
+            "sdtype": "numerical"
+        },
+        "num__Liver Big": {
+            "sdtype": "numerical"
+        },
+        "num__Liver Firm": {
+            "sdtype": "numerical"
+        },
+        "num__Spleen Palpable": {
+            "sdtype": "numerical"
+        },
+        "num__Spiders": {
+            "sdtype": "numerical"
+        },
+        "num__Ascites": {
+            "sdtype": "numerical"
+        },
+        "num__Varices": {
+            "sdtype": "numerical"
+        },
+        "num__Bilirubin": {
+            "sdtype": "numerical"
+        },
+        "num__Alk Phosphate": {
+            "sdtype": "numerical"
+        },
+        "num__Sgot": {
+            "sdtype": "numerical"
+        },
+        "num__Albumin": {
+            "sdtype": "numerical"
+        },
+        "num__Protime": {
+            "sdtype": "numerical"
+        },
+        "num__Histology": {
+            "sdtype": "categorical"
+        },
+        "Outcome": {
+            "sdtype": "categorical"
+        }
+    },
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1"
+}

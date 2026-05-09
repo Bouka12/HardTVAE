@@ -1,0 +1,41 @@
+{
+    "columns": {
+        "num__Age": {
+            "sdtype": "numerical"
+        },
+        "num__TB": {
+            "sdtype": "numerical"
+        },
+        "num__DB": {
+            "sdtype": "numerical"
+        },
+        "num__Alkphos": {
+            "sdtype": "numerical"
+        },
+        "num__Sgpt": {
+            "sdtype": "numerical"
+        },
+        "num__Sgot": {
+            "sdtype": "numerical"
+        },
+        "num__TP": {
+            "sdtype": "numerical"
+        },
+        "num__ALB": {
+            "sdtype": "numerical"
+        },
+        "num__A/G Ratio": {
+            "sdtype": "numerical"
+        },
+        "cat__Gender_Female": {
+            "sdtype": "categorical"
+        },
+        "cat__Gender_Male": {
+            "sdtype": "categorical"
+        },
+        "Outcome": {
+            "sdtype": "categorical"
+        }
+    },
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1"
+}
