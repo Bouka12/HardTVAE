@@ -226,11 +226,17 @@ def save_run_metrics(dataset_name: str, training_loss: list, combination_name: s
     Save per-epoch metrics for one run to a CSV.
     combination_name format: "dataset,metric,seed,strategy"
     """
+    # Replace the broken split approach
     if combination_name == "TVAE":
-        model, metric, strategy = combination_name,  "None", "None"
+        model, metric, strategy = "TVAE", "None", "None"
     else:
-        parts = combination_name.split('_')
-        model, metric, strategy = parts[0], parts[1], parts[2]
+        # combination_name = "HardTVAE_{metric}_{strategy}"
+        # Strip the prefix and use known strategies as anchor
+        rest = combination_name[len("HardTVAE_"):]          # e.g. "TD_P_self_paced"
+        strategy = next(s for s in ['self_paced', 'curriculum', 'static'] 
+                        if rest.endswith(s))
+        metric = rest[:-(len(strategy) + 1)]                # strip "_{strategy}"
+        model = "HardTVAE"
 
     df = pd.DataFrame(training_loss)  # already has: epoch, total_loss, recon_loss, kl_loss, grad_norm
     df['model']   = model
