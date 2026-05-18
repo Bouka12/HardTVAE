@@ -21,8 +21,9 @@ os.makedirs(PLOTS_OUT, exist_ok=True)
 # ── 1. Load all saved CSVs ────────────────────────────────────────────────────
 
 # Known values — order matters: longer/ambiguous ones first
-KNOWN_METRICS    = ['TD_P', 'Harmfulness', 'DCP', 'CLD', 'MV', 'CB', 
-                    'N2', 'LSC', 'LSR', 'F1', 'F4']
+# KNOWN_METRICS    = ['TD_P', 'Harmfulness', 'DCP', 'CLD', 'MV', 'CB', 
+#                     'N2', 'LSC', 'LSR', 'F1', 'F4']
+KNOWN_METRICS    = ['TD_P',  'CB', 'LSC', 'F4']  # TD_P first, then the rest alphabetically
 KNOWN_STRATEGIES = ['self_paced', 'curriculum', 'static']  # self_paced first
 
 
@@ -90,8 +91,6 @@ def aggregate(df: pd.DataFrame) -> pd.DataFrame:
 
 # ── 3. Plot ───────────────────────────────────────────────────────────────────
 
-# ── 3. Plot ───────────────────────────────────────────────────────────────────
-
 METRICS_TO_PLOT = {
     'grad_norm':   ('Gradient L2 Norm',   'L2 Norm'),
     'total_loss':  ('Total Loss',          'Loss'),
@@ -121,11 +120,11 @@ def plot_one_metric_config(agg: pd.DataFrame, dataset: str, hardness_metric: str
     colors = cm.tab10(np.linspace(0, 1, len(strategies)))
 
     n_rows = len(METRICS_TO_PLOT)
-    fig, axes = plt.subplots(n_rows, 1, figsize=(10, 4 * n_rows), sharex=True)
-    fig.suptitle(
-        f"Gradient & Loss Stability — {dataset}  |  metric: {hardness_metric}",
-        fontsize=13, fontweight='bold'
-    )
+    fig, axes = plt.subplots(n_rows, 1, figsize=(15, 4 * 4), sharex=True)
+    # fig.suptitle(
+    #     f"Gradient & Loss Stability — {dataset}  |  metric: {hardness_metric}",
+    #     fontsize=13, fontweight='bold'
+    # )
 
     for ax, (col, (title, ylabel)) in zip(axes, METRICS_TO_PLOT.items()):
 
@@ -156,7 +155,7 @@ def plot_one_metric_config(agg: pd.DataFrame, dataset: str, hardness_metric: str
             ax.plot(epochs, mean, label=f"{strategy}", color=color, **style)
             ax.fill_between(epochs, mean - std, mean + std, alpha=0.15, color=color)
 
-        ax.set_title(title)
+        ax.set_title(title, fontweight='bold')
         ax.set_ylabel(ylabel)
         ax.grid(True, linestyle='--', alpha=0.4)
         ax.legend(fontsize=8, ncol=2)
@@ -185,7 +184,7 @@ def plot_tvae_baseline(agg: pd.DataFrame, dataset: str):
 
     n_rows = len(METRICS_TO_PLOT)
     fig, axes = plt.subplots(n_rows, 1, figsize=(10, 4 * n_rows), sharex=True)
-    fig.suptitle(f"TVAE Baseline — {dataset}", fontsize=13, fontweight='bold')
+    # fig.suptitle(f"TVAE Baseline — {dataset}", fontsize=13, fontweight='bold')
 
     for ax, (col, (title, ylabel)) in zip(axes, METRICS_TO_PLOT.items()):
         mean   = subset[f'{col}_mean'].values
@@ -203,7 +202,7 @@ def plot_tvae_baseline(agg: pd.DataFrame, dataset: str):
     plt.tight_layout()
 
     out_path = os.path.join(PLOTS_OUT, f"{dataset}_TVAE_baseline_stability.png")
-    plt.savefig(out_path, dpi=150)
+    plt.savefig(out_path, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"  Saved → {out_path}")
 
@@ -216,7 +215,7 @@ def plot_dataset_overview(agg: pd.DataFrame, dataset: str):
     Produces 4 figures per dataset (grad_norm, total_loss, recon_loss, kl_loss).
     """
     subset          = agg[agg['dataset'] == dataset]
-    hardness_metrics = sorted([m for m in subset['metric'].unique() if m != 'None'])
+    hardness_metrics = KNOWN_METRICS #sorted([m for m in subset['metric'].unique() if m != 'None'])
     n_metrics        = len(hardness_metrics)
 
     # Grid dimensions — try to keep roughly square
@@ -237,14 +236,14 @@ def plot_dataset_overview(agg: pd.DataFrame, dataset: str):
 
         fig, axes = plt.subplots(
             n_rows, n_cols,
-            figsize=(5 * n_cols, 4 * n_rows),
+            figsize=(15, 4 * n_rows),
             sharex=True, sharey=False
         )
         axes_flat = axes.flatten()
-        fig.suptitle(
-            f"{title} — {dataset}  (all metrics vs TVAE baseline)",
-            fontsize=14, fontweight='bold'
-        )
+        # fig.suptitle(
+        #     f"{title} — {dataset}  (all metrics vs TVAE baseline)",
+        #     fontsize=14, fontweight='bold'
+        # )
 
         for idx, metric in enumerate(hardness_metrics):
             ax = axes_flat[idx]
@@ -278,10 +277,10 @@ def plot_dataset_overview(agg: pd.DataFrame, dataset: str):
                 ax.fill_between(epochs, mean - std, mean + std,
                                 alpha=0.15, color=color)
 
-            ax.set_title(metric, fontsize=10)
-            ax.set_ylabel(ylabel, fontsize=8)
+            ax.set_title(metric, fontweight='bold')
+            ax.set_ylabel(ylabel)
             ax.grid(True, linestyle='--', alpha=0.4)
-            ax.legend(fontsize=7, ncol=1)
+            ax.legend(fontsize=8, ncol=1)
 
         # Hide any unused subplot cells
         for idx in range(n_metrics, len(axes_flat)):
@@ -293,7 +292,7 @@ def plot_dataset_overview(agg: pd.DataFrame, dataset: str):
 
         plt.tight_layout()
         out_path = os.path.join(PLOTS_OUT, f"{dataset}_overview_{col}.png")
-        plt.savefig(out_path, dpi=150, bbox_inches='tight')
+        plt.savefig(out_path, dpi=300, bbox_inches='tight')
         plt.close()
         print(f"  Saved → {out_path}")
 
@@ -301,6 +300,7 @@ def plot_dataset_overview(agg: pd.DataFrame, dataset: str):
 # ── 4. Main ───────────────────────────────────────────────────────────────────
 
 def main():
+    METRICS = ["F4", "LSC", "Harmfulness", "CB", "TD_P"]
     print("Loading runs...")
     df = load_all_runs(RUN_METRICS)
     print(f"  {len(df)} epoch-rows loaded from {df['seed'].nunique()} seeds, "
@@ -312,16 +312,16 @@ def main():
     print("Plotting...")
     for dataset in agg['dataset'].unique():
         print(f"  → {dataset} | TVAE baseline")
-        plot_tvae_baseline(agg, dataset)
+        # plot_tvae_baseline(agg, dataset)
         
         print(f"  → {dataset} | overview (all metrics vs TVAE baseline)")
         plot_dataset_overview(agg, dataset)
 
-        # All HardTVAE metrics (exclude the TVAE baseline 'None')
-        hardness_metrics = [m for m in agg['metric'].unique() if m != 'None']
-        for metric in hardness_metrics:
-            print(f"  → {dataset} | {metric}")
-            plot_one_metric_config(agg, dataset, metric)
+        # # All HardTVAE metrics (exclude the TVAE baseline 'None')
+        # hardness_metrics = [m for m in METRICS if m != 'None'] #[m for m in agg['metric'].unique() if m != 'None']
+        # for metric in hardness_metrics:
+        #     print(f"  → {dataset} | {metric}")
+        #     plot_one_metric_config(agg, dataset, metric)
 
     print("Done.")
 

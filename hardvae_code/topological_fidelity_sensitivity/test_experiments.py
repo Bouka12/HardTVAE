@@ -29,7 +29,7 @@ from utils import preprocess_data
 from models.hardtvae import (TabularCVAE, HardnessCalculator,
                               prepare_dataloader, HardnessAwareCVAETrainer)
 from models.ctgan_wrapper import set_seed, ctgan
-from evaluation.topological_fidelity import topological_fidelity_calculate
+from evaluation.topological_fidelity_exp import topological_fidelity_calculate
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -55,7 +55,7 @@ print(f"Using device: {DEVICE}")
 N_EPOCHS     = 150
 MASTER_SEED  = 42
 random.seed(MASTER_SEED)
-random_seeds: List[int] = random.sample(range(1, 10**6), 10)
+random_seeds: List[int] = random.sample(range(1, 10**6), 1)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -63,8 +63,8 @@ random_seeds: List[int] = random.sample(range(1, 10**6), 10)
 # ─────────────────────────────────────────────────────────────────────────────
 
 def main():
-    datasets = ['Hypothyroid','NewThyroid1',  'Vertebral']
-    hardness_metrics = [None, 'F4', 'LSC', 'CB', 'TD_P']
+    datasets =  ["BCWDD"] # ['Hypothyroid','NewThyroid1',  'Vertebral']
+    hardness_metrics = [None, 'F1'] #['None', 'F1', 'F4', 'N2', 'LSC', 'LSR', 'Harmfulness', 'MV', 'CB', 'DCP', 'TD_P', 'CLD']
     seeds            = list(random_seeds)
     print(f"seeds = {seeds}")
 

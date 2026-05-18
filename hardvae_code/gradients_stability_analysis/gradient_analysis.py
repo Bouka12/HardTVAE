@@ -263,7 +263,7 @@ random_seeds = random.sample(range(1, 10**6), 10) # -> change to 10 later  # Ran
 
 def main():
 
-    datasets = [ 'Hypothyroid', 'NewThyroid1', 'Vertebral']
+    datasets = ["BCWDD", "ILPD"]   #[ 'Hypothyroid', 'NewThyroid1', 'Vertebral']
     hardness_metrics = [None, 'DCP', 'TD_P', 'CLD', 'MV', 'CB', 'N2', 'LSC', 
                    'LSR', 'Harmfulness', 'F1', 'F4']
     seeds = list(random_seeds)  # Different seeds for reproducibility CHANGE THIS 
@@ -273,8 +273,8 @@ def main():
     # Store results for all datasets and hardness metrics
     RESULTS_DIR = "RESULTS-GRADIENT-ANALYSIS" # -> Results directory path -> (23/04/2026) for test change the path
     os.makedirs(RESULTS_DIR, exist_ok=True)
-    # plots_dir = f"{RESULTS_DIR}/plots"
-    # os.makedirs(plots_dir, exist_ok=True)
+    hardness_dir = f"{RESULTS_DIR}/hardness_scores"
+    os.makedirs(hardness_dir, exist_ok=True)
 
     for dataset_name, seed in itertools.product(datasets, seeds):
         # set_seed(seed)
@@ -302,6 +302,14 @@ def main():
         # CTVAE the modified version of the CVAE 
 
         for hardness_metric in hardness_metrics:
+            # Save the distribution of hardness scores for the current metric and dataset and training seed and save it as csv, in a separate script we plot the average distribution of hardness scores for each metric and dataset over the different seeds (mean and std shaded plot)
+            if hardness_metric is not None:
+                hardness_calculator = HardnessCalculator(random_state=seed)
+                hardness_scores = hardness_calculator.calculate_hardness_scores(X_train_proc, y_train, [hardness_metric])
+                hardness_df = pd.DataFrame(hardness_scores, columns=[hardness_metric])
+                hardness_df.to_csv(os.path.join(hardness_dir, f"{dataset_name}_{hardness_metric}_seed{seed}_hardness_scores.csv"), index=False)
+                print(f"  Saved hardness scores → {dataset_name}_{hardness_metric}_seed{seed}_hardness_scores.csv")
+
             strategies = ['static'] if hardness_metric is None else ['curriculum', 'static', 'self_paced']
             for strategy in strategies:
                 model_name = "TVAE" if hardness_metric is None else f"HardTVAE_{hardness_metric}_{strategy}"

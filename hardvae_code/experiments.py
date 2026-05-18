@@ -26,8 +26,11 @@ from models.ctgan_wrapper import set_seed, ctgan
 from evaluation.distributional_fidelity import distributional_fidelity_calculate
 from evaluation.complexity_fidelity import complexity_fidelity_calculate
 from evaluation.hardness_fidelity import hardness_fidelity_calculate
-from evaluation.topological_fidelity import topological_fidelity_calculate
+from evaluation.topological_fidelity_exp import topological_fidelity_calculate
 from evaluation.utility_evaluation import ClassificationEvaluator
+
+# time complexity evaluation
+import time
 
 # SAVING RESULTS
 import json
@@ -67,19 +70,19 @@ CURRICULUM_EPOCHS = (N_EPOCHS * 0.3, N_EPOCHS * 0.3, N_EPOCHS * 0.4)
 # the threshold
 MASTER_SEED       = 42
 random.seed(MASTER_SEED)
-random_seeds      = random.sample(range(1, 10**6), 10)
+random_seeds      = random.sample(range(1, 10**6), 1)
 
 
 def main():
-    # datasets = ['BCWDD']
-    datasets = [
-        'BCWDD', 'HeartCleveland', 'Hepatitis', 'Hypothyroid',
-        'ILPD', 'NewThyroid1', 'NewThyroid2', 'Pima', 'Thoracic', 'Vertebral'
-    ]
-    # hardness_metrics = [None, 'F1']
-    hardness_metrics = [None, 'kDN', 'DS', 'DCP', 'TD_P',
-                   'TD_U', 'CL', 'CLD', 'MV', 'CB', 'N1', 'N2', 'LSC', 
-                   'LSR', 'Harmfulness', 'F1', 'F2', 'F3', 'F4']
+    datasets = ['Pima']
+    # datasets = [
+    #     'BCWDD', 'HeartCleveland', 'Hepatitis', 'Hypothyroid',
+    #     'ILPD', 'NewThyroid1', 'NewThyroid2', 'Pima', 'Thoracic', 'Vertebral'
+    # ]
+    hardness_metrics = [None, 'F1']
+    # hardness_metrics = [None, 'kDN', 'DS', 'DCP', 'TD_P',
+    #                'TD_U', 'CL', 'CLD', 'MV', 'CB', 'N1', 'N2', 'LSC', 
+    #                'LSR', 'Harmfulness', 'F1', 'F2', 'F3', 'F4']
     seeds            = list(random_seeds)
     print(f"seeds = {seeds}")
 
@@ -100,6 +103,10 @@ def main():
     os.makedirs(UTILITY_RESULTS_DIR, exist_ok=True)
     UTILITY_SUMMARY_CSV = os.path.join(UTILITY_RESULTS_DIR, "utility_summary.csv")
     BEST_PARAMS_CSV = os.path.join(UTILITY_RESULTS_DIR, "best_params.csv")
+    # 
+    TIME_DIR = os.path.join(DIR, "time")
+    os.makedirs(TIME_DIR, exist_ok=True)
+    TIME_COMPLEXITY_CSV = os.path.join(TIME_DIR, "time_complexity.csv") 
 
 
 
@@ -126,6 +133,10 @@ def main():
         majority_label = label_counts.idxmax()
         n_samples_needed = label_counts[majority_label] - label_counts[minority_label]
 
+        # --------------------------------------------------------------
+        # 0. Time complexity evaluation 
+        # --------------------------------------------------------------
+        time_complexity = {}
 
         # --------------------------------------------------------------
         # 1. Baseline: CTGAN (via SDV)
@@ -137,7 +148,11 @@ def main():
         X_real_minority = X_train_proc[y_train==minority_label]
         df_minority = df_train_full[df_train_full['Outcome'] == minority_label]
 
+        # Time complexity CTGAN training and generation
+        start_time = time.time()
         X_ctgan, y_ctgan = ctgan(df_train=df_train_proc, y_train=y_train, epochs=N_EPOCHS, batch_size=32, seed=seed)
+        end_time = time.time()
+        time_complexity['ctgan_training_generation'] = end_time - start_time
 
         #### TESTING ####
         # print(f"X_ctgan shape : {X_ctgan.shape}\n")
@@ -148,15 +163,22 @@ def main():
         # # fidelity < to do it
         fidelity_views_ctgan = {}
         # DISTRIBUTIONAL FIDELITY:
+        start_time = time.time()
         keys, values = distributional_fidelity_calculate(real_data=X_real_minority,synthetic_data=X_ctgan.values, 
                                                          data_info=preprocessor.data_info, feature_names=preprocessor.feature_names_out )
+        end_time = time.time()
+        time_complexity['ctgan_distributional_fidelity'] = end_time - start_time
+
         # print(f"keys dist {keys}\n")
         # print(f"values dist {values}\n")
         fidelity_views_ctgan['distributional'] = dict(zip(keys, values))
 
         # COMPLEXITY FIDELITY
+        start_time = time.time()
         keys, values, complexity_detailed_results = complexity_fidelity_calculate(X_real=X_train_proc,y_real = y_train,X_synth=X_ctgan,y_synth=y_ctgan,
                                                      k=3, random_state=seed, return_detailed=True)
+        end_time = time.time()
+        time_complexity['ctgan_complexity_fidelity'] = end_time - start_time
         # print(f"keys complexity {keys}\n")
         # print(f"values complexity {values}\n")
         fidelity_views_ctgan['complexity'] = dict(zip(keys, values))
@@ -164,14 +186,22 @@ def main():
         # HARDNESS FIDELITY
         path_plots_ctgan = f"{plots_dir}/{model_name}/{dataset_name}/"
         os.makedirs(path_plots_ctgan, exist_ok=True)
+        start_time = time.time()
         keys, values, hardness_detailed_results = hardness_fidelity_calculate(X_real=X_train_proc, y_real=y_train,X_synth=X_ctgan, y_synth=y_ctgan,
                                                    k=3, random_state=seed, save_path=path_plots_ctgan, dataset_name=dataset_name, return_detailed=True)
+        end_time = time.time()
+        time_complexity['ctgan_hardness_fidelity'] = end_time - start_time
+
         fidelity_views_ctgan['hardness'] = dict(zip(keys, values)) 
 
         # TOPOLOGICAL FIDELITY
+        ## get time of the topological fidelity calculation for CTGAN
+        start_time = time.time()
         topo_results =  topological_fidelity_calculate(X_real=X_train_proc, y_real=y_train, X_synth=X_ctgan, y_synth=y_ctgan,
                                                        random_state=seed, dataset_name=dataset_name, save_path=path_plots_ctgan,dimensions_to_test=[3])
-                
+        end_time = time.time()
+        time_complexity['ctgan_topological_fidelity'] = end_time - start_time
+
         # print(f"keys topo {keys}\n")
         # print(f"values topo {values}\n")
 
@@ -210,18 +240,21 @@ def main():
         X_train_augmented = np.vstack([X_train_proc, X_ctgan.values])
         y_train_augmented = np.concatenate([y_train, y_ctgan])
 
+        start_time = time.time()
         evaluator_ctgan = ClassificationEvaluator(
             dataset_name=dataset_name,
             combination_name=model_name,
             random_state=seed,
             results_path=UTILITY_RESULTS_DIR
         )
-        
+
         utility_res_ctgan, best_params_ctgan = evaluator_ctgan.evaluate(
             X_train=X_train_augmented, y_train=y_train_augmented,
             X_val=X_val_proc, y_val=y_val,
             X_test=X_test_proc, y_test=y_test
         )
+        end_time = time.time()
+        time_complexity['ctgan_utility_evaluation'] = end_time - start_time
 
         # Save Utility Summary
         utility_res_ctgan['model'] = model_name
@@ -254,8 +287,10 @@ def main():
                     hardness_integrator=CVAEHardnessIntegrator(hardness_strategy=strategy),
                     device=DEVICE
                 )
-
+                start_time = time.time()
                 trainer.calculate_hardness_scores(X_train_proc, y_train, [hardness_metric])
+                end_time = time.time()
+                time_complexity[f'{model_name}_hardness_calculation'] = end_time - start_time
                 dataloader = prepare_dataloader(X_train_proc, y_train)
                 if trainer.hardness_scores is None and hardness_metric is not None:
                     print(f"Skipping: invalid hardness scores for {dataset_name}")
