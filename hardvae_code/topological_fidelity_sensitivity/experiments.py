@@ -55,7 +55,7 @@ print(f"Using device: {DEVICE}")
 N_EPOCHS     = 150
 MASTER_SEED  = 42
 random.seed(MASTER_SEED)
-random_seeds: List[int] = random.sample(range(1, 10**6), 10)
+random_seeds: List[int] = random.sample(range(1, 10**6), 3)
 
 
 # ─────────────────────────────────────────────────────────────────────────────

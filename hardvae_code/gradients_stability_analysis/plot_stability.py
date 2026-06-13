@@ -23,7 +23,7 @@ os.makedirs(PLOTS_OUT, exist_ok=True)
 # Known values — order matters: longer/ambiguous ones first
 # KNOWN_METRICS    = ['TD_P', 'Harmfulness', 'DCP', 'CLD', 'MV', 'CB', 
 #                     'N2', 'LSC', 'LSR', 'F1', 'F4']
-KNOWN_METRICS    = ['TD_P',  'CB', 'LSC', 'F4']  # TD_P first, then the rest alphabetically
+KNOWN_METRICS    = [ 'CB', 'LSC', 'F4'] # excluded: 'TD_P',  # TD_P first, then the rest alphabetically
 KNOWN_STRATEGIES = ['self_paced', 'curriculum', 'static']  # self_paced first
 
 
@@ -300,7 +300,7 @@ def plot_dataset_overview(agg: pd.DataFrame, dataset: str):
 # ── 4. Main ───────────────────────────────────────────────────────────────────
 
 def main():
-    METRICS = ["F4", "LSC", "Harmfulness", "CB", "TD_P"]
+    # METRICS = ["F4", "LSC", "Harmfulness", "CB", "TD_P"]
     print("Loading runs...")
     df = load_all_runs(RUN_METRICS)
     print(f"  {len(df)} epoch-rows loaded from {df['seed'].nunique()} seeds, "

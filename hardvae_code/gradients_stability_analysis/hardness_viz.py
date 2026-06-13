@@ -6,7 +6,7 @@ import glob
 import re
 import os
 
-METRICS = ["TD_P",  "CB", "LSC", "F4" ]
+METRICS = [  "CB", "LSC", "F4" ] # "TD_P",
 
 
 def load_and_aggregate_hardness(directory='.'):
