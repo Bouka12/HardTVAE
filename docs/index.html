@@ -436,7 +436,7 @@
     <h2>Welcome to HardTVAE</h2>
     <p>
       This companion website provides extended material for the paper
-      <strong>"Hardness-Aware TabularVariational Autoencoders for Synthetic Data Generation in Imbalanced Learning"</strong>.
+      <strong>"Hardness-Aware Tabular Variational Autoencoders for Synthetic Data Generation in Imbalanced Learning"</strong>.
       It complements the main manuscript and the Supplementary Appendix by offering <!--interactive visualizations,-->
       extended result summaries and reproducibility resources for the HardTVAE framework and the multi-view fidelity
       evaluation method.
@@ -516,12 +516,36 @@
     
     <div class="tab-container">
       <div class="tabs">
-        <button class="tab-button active" onclick="switchTab(event, 'mfi')">MFI Results</button>
+        <button class="tab-button active" onclick="switchTab(event, 'mfi-dist')">Distributional (v_dist)</button>
+        <button class="tab-button" onclick="switchTab(event, 'mfi-comp')">Complexity (v_comp)</button>
+        <button class="tab-button" onclick="switchTab(event, 'mfi-hard')">Hardness (v_hard)</button>
+        <button class="tab-button" onclick="switchTab(event, 'mfi-topo')">Topological (v_topo)</button>
+        <button class="tab-button" onclick="switchTab(event, 'mfi-overall')">MFI</button>
       </div>
       
-      <div id="mfi" class="tab-content active">
-        <div id="mfi-loading" class="loading">Loading MFI Results...</div>
-        <table id="mfi-table" class="display" style="display:none;"></table>
+      <div id="mfi-dist" class="tab-content active">
+        <div id="mfi-dist-loading" class="loading">Loading Distributional Results...</div>
+        <table id="mfi-dist-table" class="display" style="display:none;"></table>
+      </div>
+      
+      <div id="mfi-comp" class="tab-content">
+        <div id="mfi-comp-loading" class="loading">Loading Complexity Results...</div>
+        <table id="mfi-comp-table" class="display" style="display:none;"></table>
+      </div>
+      
+      <div id="mfi-hard" class="tab-content">
+        <div id="mfi-hard-loading" class="loading">Loading Hardness Results...</div>
+        <table id="mfi-hard-table" class="display" style="display:none;"></table>
+      </div>
+      
+      <div id="mfi-topo" class="tab-content">
+        <div id="mfi-topo-loading" class="loading">Loading Topological Results...</div>
+        <table id="mfi-topo-table" class="display" style="display:none;"></table>
+      </div>
+      
+      <div id="mfi-overall" class="tab-content">
+        <div id="mfi-overall-loading" class="loading">Loading MFI Results...</div>
+        <table id="mfi-overall-table" class="display" style="display:none;"></table>
       </div>
     </div>
 
@@ -687,9 +711,9 @@
   }
   
   // Convert parsed data to DataTables format
-  function convertToDataTables(headers, data) {
+  function convertToDataTables(headers, data, columnLabels = {}) {
     return {
-      columns: headers.map(h => ({ title: h, data: h })),
+      columns: headers.map(h => ({ title: columnLabels[h] || h, data: h })),
       data: data
     };
   }
@@ -774,7 +798,7 @@
   }
   
   // Load CSV and initialize DataTable
-  function loadCSVTable(csvFile, tableId, loadingId, columnsToKeep = null, categoricalColumns = []) {
+  function loadCSVTable(csvFile, tableId, loadingId, columnsToKeep = null, categoricalColumns = [], columnLabels = {}) {
     fetch(`data/${csvFile}`)
       .then(response => {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -790,7 +814,7 @@
           data = filtered.data;
         }
         
-        const dtConfig = convertToDataTables(headers, data);
+        const dtConfig = convertToDataTables(headers, data, columnLabels);
         
         // Hide loading indicator
         document.getElementById(loadingId).style.display = 'none';
@@ -832,9 +856,24 @@
     // Set update date
     document.getElementById('update-date').textContent = new Date().toLocaleDateString();
     
-    // Load MFI results
-    loadCSVTable('mfi_results_paper.csv', 'mfi-table', 'mfi-loading',
-      null, ['dataset', 'model', 'hardness_metric', 'strategy']);
+    // Load MFI results - per-view tabs
+    const mfiIdCols = ['dataset', 'seed', 'model', 'hardness_metric', 'strategy'];
+    const mfiCategorical = ['dataset', 'model', 'hardness_metric', 'strategy'];
+    
+    loadCSVTable('mfi_results_paper.csv', 'mfi-dist-table', 'mfi-dist-loading',
+      [...mfiIdCols, 'v_dist'], mfiCategorical, { v_dist: 'V<sub>dist</sub>' });
+    
+    loadCSVTable('mfi_results_paper.csv', 'mfi-comp-table', 'mfi-comp-loading',
+      [...mfiIdCols, 'v_comp'], mfiCategorical, { v_comp: 'V<sub>comp</sub>' });
+    
+    loadCSVTable('mfi_results_paper.csv', 'mfi-hard-table', 'mfi-hard-loading',
+      [...mfiIdCols, 'v_hard'], mfiCategorical, { v_hard: 'V<sub>hard</sub>' });
+    
+    loadCSVTable('mfi_results_paper.csv', 'mfi-topo-table', 'mfi-topo-loading',
+      [...mfiIdCols, 'v_topo'], mfiCategorical, { v_topo: 'V<sub>topo</sub>' });
+    
+    loadCSVTable('mfi_results_paper.csv', 'mfi-overall-table', 'mfi-overall-loading',
+      [...mfiIdCols, 'MFI'], mfiCategorical, { MFI: 'MFI' });
     
     // Load Gain Indices vs CTGAN
     loadCSVTable('gain_indices_vs_CTGAN.csv', 'gain-ctgan-table', 'gain-ctgan-loading',
