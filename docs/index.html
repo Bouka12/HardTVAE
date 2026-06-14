@@ -425,6 +425,7 @@
     <a href="#fidelity">Multi-View Fidelity Framework</a>
     <a href="#results">Fidelity Results Explorer</a>
     <a href="#utility">Utility Results Explorer</a>
+    <a href="#sensitivity">Sensitivity to Weighting Design</a>
     <a href="#hardness">Hardness Measures</a>
     <a href="#code">Reproducibility & Code</a>
     <a href="#downloads">Downloads</a>
@@ -436,7 +437,7 @@
     <h2>Welcome to HardTVAE</h2>
     <p>
       This companion website provides extended material for the paper
-      <strong>"Hardness-Aware Tabular Variational Autoencoders for Synthetic Data Generation in Imbalanced Learning"</strong>.
+      <strong>"Hardness-Aware TabularVariational Autoencoders for Synthetic Data Generation in Imbalanced Learning"</strong>.
       It complements the main manuscript and the Supplementary Appendix by offering <!--interactive visualizations,-->
       extended result summaries and reproducibility resources for the HardTVAE framework and the multi-view fidelity
       evaluation method.
@@ -579,6 +580,42 @@
       <div id="gain-tvae" class="tab-content">
         <div id="gain-tvae-loading" class="loading">Loading Gain Indices vs TVAE...</div>
         <table id="gain-tvae-table" class="display" style="display:none;"></table>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="sensitivity">
+    <h2>Sensitivity to Weighting Design</h2>
+
+    <div class="info-box">
+      <p>
+        <strong>Interactive Tables:</strong> Use the dropdown filters below each column header to filter by categorical values. 
+        Use the search box to search across all columns, click headers to sort, and use the entries dropdown to adjust rows per page.
+        You can export results as CSV or PDF using the buttons above each table.
+      </p>
+    </div>
+
+    <p>
+      The tables below report the sensitivity of HardTVAE to the curriculum/self-paced weighting design choices
+      (pacing function, curriculum split, and annealing weight), aggregated as mean &plusmn; standard deviation
+      across runs, for both fidelity and utility metrics.
+    </p>
+
+    <div class="tab-container">
+      <div class="tabs">
+        <button class="tab-button active" onclick="switchTab(event, 'sensitivity-fidelity')">Fidelity Sensitivity</button>
+        <button class="tab-button" onclick="switchTab(event, 'sensitivity-utility')">Utility Sensitivity</button>
+      </div>
+
+      <div id="sensitivity-fidelity" class="tab-content active">
+        <div id="sensitivity-fidelity-loading" class="loading">Loading Fidelity Sensitivity...</div>
+        <table id="sensitivity-fidelity-table" class="display" style="display:none;"></table>
+      </div>
+
+      <div id="sensitivity-utility" class="tab-content">
+        <div id="sensitivity-utility-loading" class="loading">Loading Utility Sensitivity...</div>
+        <table id="sensitivity-utility-table" class="display" style="display:none;"></table>
       </div>
     </div>
   </section>
@@ -882,6 +919,15 @@
     // Load Gain Indices vs TVAE
     loadCSVTable('gain_indices_vs_TVAE.csv', 'gain-tvae-table', 'gain-tvae-loading',
       null, ['model', 'hardness_metric', 'strategy', 'Dataset', 'metric']);
+    
+    // Load Sensitivity tables
+    const sensitivityCategorical = ['model', 'strategy', 'pacing_function', 'curriculum_split'];
+    
+    loadCSVTable('sensitivity_fidelity_table.csv', 'sensitivity-fidelity-table', 'sensitivity-fidelity-loading',
+      null, sensitivityCategorical);
+    
+    loadCSVTable('sensitivity_utility_table.csv', 'sensitivity-utility-table', 'sensitivity-utility-loading',
+      null, sensitivityCategorical);
   });
 </script>
 
