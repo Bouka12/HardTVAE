@@ -729,14 +729,43 @@
 
 <script>
   // CSV parsing function
+  // Split a single CSV line into fields, respecting double-quoted fields
+  // that may contain commas (e.g. "(0.2, 0.2, 0.6)").
+  function splitCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+    
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      
+      if (char === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          // Escaped quote
+          current += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === ',' && !inQuotes) {
+        result.push(current);
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    result.push(current);
+    return result;
+  }
+  
   function parseCSV(csv) {
     const lines = csv.trim().split(/\r\n|\n/);
-    const headers = lines[0].split(',').map(h => h.trim());
+    const headers = splitCSVLine(lines[0]).map(h => h.trim());
     const data = [];
     
     for (let i = 1; i < lines.length; i++) {
       const obj = {};
-      const currentLine = lines[i].split(',');
+      const currentLine = splitCSVLine(lines[i]);
       
       for (let j = 0; j < headers.length; j++) {
         obj[headers[j]] = currentLine[j] ? currentLine[j].trim() : '';
