@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HardVAE – Companion Website</title>
+  <title>HardTVAE – Companion Website</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <!-- DataTables CSS -->
@@ -417,13 +417,14 @@
 <body>
 
 <header>
-  <h1>HardVAE : Hardness-Aware Variational Autoencoders</h1>
+  <h1>HardTVAE : Hardness-Aware Tabular Variational Autoencoders</h1>
   <!--<p><strong>Synthetic Data Generation and Evaluation for Imbalanced Classification</strong></p>-->
   <nav>
     <a href="#home">Home</a>
-    <a href="#overview">HardVAE Overview</a>
-    <a href="#fidelity">Multi-View Fidelity</a>
-    <a href="#results">Results Explorer</a>
+    <a href="#overview">HardTVAE Overview</a>
+    <a href="#fidelity">Multi-View Fidelity Framework</a>
+    <a href="#results">Fidelity Results Explorer</a>
+    <a href="#utility">Utility Results Explorer</a>
     <a href="#hardness">Hardness Measures</a>
     <a href="#code">Reproducibility & Code</a>
     <a href="#downloads">Downloads</a>
@@ -432,12 +433,12 @@
 
 <main>
   <section id="home">
-    <h2>Welcome to HardVAE</h2>
+    <h2>Welcome to HardTVAE</h2>
     <p>
       This companion website provides extended material for the paper
-      <strong>"Hardness-Aware Variational Autoencoders for Synthetic Data Generation in Imbalanced Learning"</strong>.
+      <strong>"Hardness-Aware TabularVariational Autoencoders for Synthetic Data Generation in Imbalanced Learning"</strong>.
       It complements the main manuscript and the Supplementary Appendix by offering <!--interactive visualizations,-->
-      extended result summaries and reproducibility resources for the HardVAE framework and the multi-view fidelity
+      extended result summaries and reproducibility resources for the HardTVAE framework and the multi-view fidelity
       evaluation method.
     </p>
     <p>
@@ -454,11 +455,11 @@
   </section>
 
   <section id="overview">
-    <h2>HardVAE Overview</h2>
+    <h2>HardTVAE Overview</h2>
     <p>
-      HardVAE is a hardness-aware variational autoencoder designed to improve synthetic data generation in imbalanced
+      HardTVAE is a hardness-aware variational autoencoder designed to improve synthetic data generation in imbalanced
       tabular settings. Unlike standard VAEs, which implicitly treat all training instances as equally informative,
-      HardVAE integrates instance hardness directly into the generative objective. Harder instances (e.g., borderline,
+      HardTVAE integrates instance hardness directly into the generative objective. Harder instances (e.g., borderline,
       rare, or noisy samples) receive higher weight in the reconstruction loss, leading to synthetic data that better
       captures the structural variability of the minority class.
     </p>
@@ -500,7 +501,7 @@
   </section>
 
   <section id="results">
-    <h2>Results Explorer</h2>
+    <h2>Fidelity Results Explorer</h2>
     
     <div class="info-box">
       <p>
@@ -515,30 +516,12 @@
     
     <div class="tab-container">
       <div class="tabs">
-        <button class="tab-button active" onclick="switchTab(event, 'distributional')">Distributional Fidelity</button>
-        <button class="tab-button" onclick="switchTab(event, 'topological')">Topological Fidelity</button>
-        <button class="tab-button" onclick="switchTab(event, 'hardness')">Hardness-Based Fidelity</button>
-        <button class="tab-button" onclick="switchTab(event, 'complexity')">Complexity-Based Fidelity</button>
+        <button class="tab-button active" onclick="switchTab(event, 'mfi')">MFI Results</button>
       </div>
       
-      <div id="distributional" class="tab-content active">
-        <div id="distributional-loading" class="loading">Loading Distributional Results...</div>
-        <table id="distributional-table" class="display" style="display:none;"></table>
-      </div>
-      
-      <div id="topological" class="tab-content">
-        <div id="topological-loading" class="loading">Loading Topological Results...</div>
-        <table id="topological-table" class="display" style="display:none;"></table>
-      </div>
-      
-      <div id="hardness" class="tab-content">
-        <div id="hardness-loading" class="loading">Loading Hardness Results...</div>
-        <table id="hardness-table" class="display" style="display:none;"></table>
-      </div>
-      
-      <div id="complexity" class="tab-content">
-        <div id="complexity-loading" class="loading">Loading Complexity Results...</div>
-        <table id="complexity-table" class="display" style="display:none;"></table>
+      <div id="mfi" class="tab-content active">
+        <div id="mfi-loading" class="loading">Loading MFI Results...</div>
+        <table id="mfi-table" class="display" style="display:none;"></table>
       </div>
     </div>
 
@@ -547,18 +530,18 @@
     
     <div class="tab-container">
       <div class="tabs">
-        <button class="tab-button active" onclick="switchTab(event, 'utility-gains')">Utility Gains</button>
-        <button class="tab-button" onclick="switchTab(event, 'gain-indices')">Gain Indices</button>
+        <button class="tab-button active" onclick="switchTab(event, 'gain-ctgan')">Gain Indices vs CTGAN</button>
+        <button class="tab-button" onclick="switchTab(event, 'gain-tvae')">Gain Indices vs TVAE</button>
       </div>
       
-      <div id="utility-gains" class="tab-content active">
-        <div id="utility-gains-loading" class="loading">Loading Utility Gains...</div>
-        <table id="utility-gains-table" class="display" style="display:none;"></table>
+      <div id="gain-ctgan" class="tab-content active">
+        <div id="gain-ctgan-loading" class="loading">Loading Gain Indices vs CTGAN...</div>
+        <table id="gain-ctgan-table" class="display" style="display:none;"></table>
       </div>
       
-      <div id="gain-indices" class="tab-content">
-        <div id="gain-indices-loading" class="loading">Loading Gain Indices...</div>
-        <table id="gain-indices-table" class="display" style="display:none;"></table>
+      <div id="gain-tvae" class="tab-content">
+        <div id="gain-tvae-loading" class="loading">Loading Gain Indices vs TVAE...</div>
+        <table id="gain-tvae-table" class="display" style="display:none;"></table>
       </div>
     </div>
   </section>
@@ -566,9 +549,9 @@
   <section id="hardness">
     <h2>Hardness Measures</h2>
     <p>
-      HardVAE builds on a rich set of hardness measures that quantify how difficult individual instances are to model
+      HardTVAE builds on a rich set of hardness measures that quantify how difficult individual instances are to model
       or classify. These measures are grouped into neighborhood-based, likelihood-based, tree-based, and class-balance
-      categories. Each measure provides a different perspective on instance difficulty, and HardVAE can integrate them
+      categories. Each measure provides a different perspective on instance difficulty, and HardTVAE can integrate them
       individually or in combination.
     </p>
     
@@ -592,7 +575,7 @@
     <div class="info-box">
       <p>
         <strong>Note:</strong> The supplementary materials PDF contains detailed mathematical definitions, 
-        formulations, and theoretical background for all 18 hardness measures used in HardVAE. 
+        formulations, and theoretical background for all 18 hardness measures used in HardTVAE. 
         Page 2 specifically covers the hardness measure definitions.
       </p>
     </div>
@@ -601,7 +584,7 @@
   <section id="code">
     <h2>Code & Resources</h2>
     <p>
-      To encourage reproducibility and further research, we release complete code repositories implementing HardVAE 
+      To encourage reproducibility and further research, we release complete code repositories implementing HardTVAE 
       and the baseline models, along with configuration files, scripts, and detailed documentation for computing 
       hardness measures and multi-view fidelity metrics.
     </p>
@@ -650,7 +633,7 @@
 </main>
 
 <footer>
-  <p>HardVAE Companion Website – © Authors. Last updated: <span id="update-date"></span></p>
+  <p>HardTVAE Companion Website – © Authors. Last updated: <span id="update-date"></span></p>
   <p>
     <a href="https://github.com/Bouka12/HardVAE" target="_blank" style="color: #fff;">GitHub Repository</a> | 
     <a href="https://github.com/Bouka12/HardVAE/blob/main/EXPERIMENTAL_REPRODUCIBILITY_GUIDE.md" target="_blank" style="color: #fff;">Reproducibility Guide</a> |
@@ -672,7 +655,7 @@
 <script>
   // CSV parsing function
   function parseCSV(csv) {
-    const lines = csv.trim().split('\n');
+    const lines = csv.trim().split(/\r\n|\n/);
     const headers = lines[0].split(',').map(h => h.trim());
     const data = [];
     
@@ -835,61 +818,17 @@
     // Set update date
     document.getElementById('update-date').textContent = new Date().toLocaleDateString();
     
-    // Load Distributional results
-    loadCSVTable('Distributional_results.csv', 'distributional-table', 'distributional-loading', 
-      null, ['dataset', 'hardness_metric', 'weighting_strategy']);
+    // Load MFI results
+    loadCSVTable('mfi_results_paper.csv', 'mfi-table', 'mfi-loading',
+      null, ['dataset', 'model', 'hardness_metric', 'strategy']);
     
-    // Load Topological results with filtered columns
-    const topologicalColumns = [
-      'dataset',
-      'hardness_metric',
-      'random_seed',
-      'weighting_strategy',
-      'Bottleneck_H0_mean',
-      'Bottleneck_H0_std'
-    ];
-    loadCSVTable('Topological_results.csv', 'topological-table', 'topological-loading', 
-      topologicalColumns, ['dataset', 'hardness_metric', 'weighting_strategy']);
+    // Load Gain Indices vs CTGAN
+    loadCSVTable('gain_indices_vs_CTGAN.csv', 'gain-ctgan-table', 'gain-ctgan-loading',
+      null, ['model', 'hardness_metric', 'strategy', 'Dataset', 'metric']);
     
-    // Load Hardness results
-    const hardnessColumns = [
-      'dataset',
-      'hardness_metric',
-      'random_seed',
-      'weighting_strategy',
-      'ks_mean'
-    ];
-    loadCSVTable('Hardness_results.csv', 'hardness-table', 'hardness-loading',
-      hardnessColumns, ['dataset', 'hardness_metric', 'weighting_strategy']);
-    
-    // Load Complexity results
-    const complexityColumns = [
-      'dataset',
-      'hardness_metric',
-      'random_seed',
-      'weighting_strategy',
-      'difference_score'
-    ];
-    loadCSVTable('Complexity_results.csv', 'complexity-table', 'complexity-loading',
-      complexityColumns, ['dataset', 'hardness_metric', 'weighting_strategy']);
-    
-    // Load Utility Gains
-    loadCSVTable('utility_gains.csv', 'utility-gains-table', 'utility-gains-loading',
-      null, ['dataset', 'Classifier', 'weighting_strategy', 'hardness_metric', 'metric']);
-    
-    // Load Gain Indices
-    const gainindicesColumns = [
-      'dataset',
-      'Classifier',
-      'weighting_strategy',
-      'hardness_metric',
-      'metric',
-      'gain_index',
-      'gain_disparity'
-    ];
-      
-    loadCSVTable('gain_indices.csv', 'gain-indices-table', 'gain-indices-loading',
-      gainindicesColumns, ['dataset', 'Classifier', 'weighting_strategy', 'hardness_metric', 'metric']);
+    // Load Gain Indices vs TVAE
+    loadCSVTable('gain_indices_vs_TVAE.csv', 'gain-tvae-table', 'gain-tvae-loading',
+      null, ['model', 'hardness_metric', 'strategy', 'Dataset', 'metric']);
   });
 </script>
 
