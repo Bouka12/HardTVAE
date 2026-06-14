@@ -74,12 +74,12 @@ random_seeds      = random.sample(range(1, 10**6), 1)
 
 
 def main():
-    datasets = ['Pima']
+    datasets = ['Thoracic']
     # datasets = [
     #     'BCWDD', 'HeartCleveland', 'Hepatitis', 'Hypothyroid',
     #     'ILPD', 'NewThyroid1', 'NewThyroid2', 'Pima', 'Thoracic', 'Vertebral'
     # ]
-    hardness_metrics = [None, 'F1']
+    hardness_metrics = ['TD_P']
     # hardness_metrics = [None, 'kDN', 'DS', 'DCP', 'TD_P',
     #                'TD_U', 'CL', 'CLD', 'MV', 'CB', 'N1', 'N2', 'LSC', 
     #                'LSR', 'Harmfulness', 'F1', 'F2', 'F3', 'F4']
@@ -104,9 +104,9 @@ def main():
     UTILITY_SUMMARY_CSV = os.path.join(UTILITY_RESULTS_DIR, "utility_summary.csv")
     BEST_PARAMS_CSV = os.path.join(UTILITY_RESULTS_DIR, "best_params.csv")
     # 
-    TIME_DIR = os.path.join(DIR, "time")
-    os.makedirs(TIME_DIR, exist_ok=True)
-    TIME_COMPLEXITY_CSV = os.path.join(TIME_DIR, "time_complexity.csv") 
+    # TIME_DIR = os.path.join(DIR, "time")
+    # os.makedirs(TIME_DIR, exist_ok=True)
+    # TIME_COMPLEXITY_CSV = os.path.join(TIME_DIR, "time_complexity.csv") 
 
 
 
