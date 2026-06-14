@@ -601,6 +601,12 @@
       (pacing function, curriculum split, and annealing weight), aggregated as mean &plusmn; standard deviation
       across runs, for both fidelity and utility metrics.
     </p>
+    <p>
+      For the curriculum strategy, the three-stage split is parameterized by a single value <strong>p</strong>,
+      with stage proportions <strong>(p, p, 1&minus;2p)</strong>. The column <strong>p</strong> below reports
+      this parameter (p = 0.2, 0.3, or 0.4), corresponding to splits (0.2, 0.2, 0.6), (0.3, 0.3, 0.4), and
+      (0.4, 0.4, 0.2) respectively.
+    </p>
 
     <div class="tab-container">
       <div class="tabs">
@@ -950,7 +956,7 @@
       null, ['model', 'hardness_metric', 'strategy', 'Dataset', 'metric']);
     
     // Load Sensitivity tables
-    const sensitivityCategorical = ['model', 'strategy', 'pacing_function', 'curriculum_split'];
+    const sensitivityCategorical = ['model', 'strategy', 'pacing_function', 'p'];
     
     loadCSVTable('sensitivity_fidelity_table.csv', 'sensitivity-fidelity-table', 'sensitivity-fidelity-loading',
       null, sensitivityCategorical);
